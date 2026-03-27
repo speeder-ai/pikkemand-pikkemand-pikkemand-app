@@ -639,7 +639,6 @@
     .nav-item .nav-icon { font-size: 20px; }
     .nav-item .nav-label { font-size: 10px; font-weight: 600; color: var(--gray); letter-spacing: 0.03em; }
     .nav-item.active .nav-label { color: var(--amber-dark); }
-    .nav-item.active .nav-icon { filter: none; }
 
     /* ── TOAST NOTIFICATIONS ── */
     .toast {
@@ -666,12 +665,12 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Skip toast - red */
+    /* Skip toast — red */
     #skip-toast {
       background: linear-gradient(135deg, #EF4444, #DC2626);
     }
 
-    /* Save toast - blue (separate element, no style mutation needed) */
+    /* Save toast — blue (dedicated element, never mutated by skip actions) */
     #save-toast {
       background: linear-gradient(135deg, #3B82F6, #1D4ED8);
     }
@@ -837,7 +836,7 @@
       <div class="card-area" id="card-area">
         <div class="card-stack" id="card-stack">
 
-          <!-- Card 1: Mati Sepp -->
+          <!-- Card 0: Mati Sepp -->
           <div class="handyman-card top-card" id="card-0" data-name="Mati" data-index="0">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -878,7 +877,7 @@
             </div>
           </div>
 
-          <!-- Card 2: Kristjan Pärn -->
+          <!-- Card 1: Kristjan Pärn -->
           <div class="handyman-card second-card" id="card-1" data-name="Kristjan" data-index="1">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -919,7 +918,7 @@
             </div>
           </div>
 
-          <!-- Card 3: Annika Tamm -->
+          <!-- Card 2: Annika Tamm -->
           <div class="handyman-card third-card" id="card-2" data-name="Annika" data-index="2">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -960,7 +959,7 @@
             </div>
           </div>
 
-          <!-- Card 4: Toomas Kask -->
+          <!-- Card 3: Toomas Kask -->
           <div class="handyman-card" id="card-3" data-name="Toomas" data-index="3" style="z-index:7; transform: scale(0.88) translateY(36px);">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -1001,7 +1000,7 @@
             </div>
           </div>
 
-          <!-- Card 5: Peeter Lõhmus -->
+          <!-- Card 4: Peeter Lõhmus -->
           <div class="handyman-card" id="card-4" data-name="Peeter" data-index="4" style="z-index:6; transform: scale(0.84) translateY(48px);">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -1042,7 +1041,7 @@
             </div>
           </div>
 
-          <!-- Card 6: Jüri Rebane -->
+          <!-- Card 5: Jüri Rebane -->
           <div class="handyman-card" id="card-5" data-name="Jüri" data-index="5" style="z-index:5; transform: scale(0.80) translateY(60px);">
             <div class="decision-overlay skip-overlay">SKIP</div>
             <div class="decision-overlay request-overlay">REQUEST</div>
@@ -1112,10 +1111,10 @@
           <p class="success-sub" id="success-sub">They will respond shortly</p>
         </div>
 
-        <!-- Skip toast -->
+        <!-- Skip toast — dedicated red element -->
         <div class="toast" id="skip-toast">Skipped</div>
 
-        <!-- Save toast (dedicated element — no style mutation of skip-toast) -->
+        <!-- Save toast — dedicated blue element, never mutated by skip actions -->
         <div class="toast" id="save-toast"></div>
 
       </div><!-- /card-area -->
@@ -1173,18 +1172,19 @@
 
   <script>
     // ── STATE ──
-    // All 6 cards indexed 0-5. cardOrder tracks which cards remain.
     const TOTAL_CARDS = 6;
     let cardOrder = [0, 1, 2, 3, 4, 5]; // front → back
     let currentCard = null;
     let isDragging = false;
-    let dragReady = true; // guard to prevent drag during 50ms reset window
+    // dragReady: prevents new drags during card dismissal animation.
+    // Set false on drag-end, restored only after the 420ms dismiss animation completes.
+    // This closes the race window where a new drag fires with currentCard = null.
+    let dragReady = true;
 
-    // Drag state
     let startX = 0, startY = 0, currentX = 0;
     let animationFrame = null;
 
-    // Toast timers (separate for skip and save to avoid race conditions)
+    // Separate timers for skip and save toasts — prevents cross-action interference
     let skipToastTimer = null;
     let saveToastTimer = null;
 
@@ -1195,7 +1195,7 @@
     const requestSuccess = document.getElementById('request-success');
     const successSub = document.getElementById('success-sub');
     const skipToastEl = document.getElementById('skip-toast');
-    const saveToastEl = document.getElementById('save-toast');
+    const saveToastEl = document.getElementById('save-toast'); // dedicated blue toast
     const actionBar = document.getElementById('action-bar');
 
     // ── CARD MANAGEMENT ──
@@ -1210,7 +1210,6 @@
     }
 
     function reorderStack() {
-      // Apply z-index and stacking transforms based on position in queue
       cardOrder.forEach((idx, pos) => {
         const el = document.getElementById('card-' + idx);
         if (!el) return;
@@ -1230,8 +1229,8 @@
         } else {
           el.style.zIndex = Math.max(1, 10 - pos);
           const scale = Math.max(0.80, 0.96 - pos * 0.04);
-          const translateY = pos * 12;
-          el.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+          const ty = pos * 12;
+          el.style.transform = `scale(${scale}) translateY(${ty}px)`;
         }
       });
 
@@ -1245,12 +1244,10 @@
         swipeHint.style.display = 'flex';
         actionBar.style.opacity = '1';
         actionBar.style.pointerEvents = 'auto';
-        // Attach drag to new top card immediately
         attachDrag(getTopCardEl());
       }
     }
 
-    // Remove top card and animate it off screen
     function dismissCard(direction, onComplete) {
       const topIdx = cardOrder[0];
       const el = document.getElementById('card-' + topIdx);
@@ -1274,7 +1271,6 @@
     // ── DRAG / SWIPE LOGIC ──
     function attachDrag(card) {
       if (!card) return;
-      // Remove previous listeners to avoid stacking
       card.removeEventListener('mousedown', onDragStart);
       card.removeEventListener('touchstart', onDragStart);
       card.addEventListener('mousedown', onDragStart, { passive: false });
@@ -1282,7 +1278,7 @@
     }
 
     function onDragStart(e) {
-      // Only respond if dragReady (not in the brief cleanup window)
+      // Guard: do not start a new drag during the dismissal animation window
       if (!dragReady) return;
       if (cardOrder.length === 0) return;
 
@@ -1310,15 +1306,14 @@
       if (!isDragging || !currentCard) return;
       const point = e.touches ? e.touches[0] : e;
       currentX = point.clientX - startX;
-      const currentY = point.clientY - startY;
+      const dy = point.clientY - startY;
       const rotation = currentX * 0.08;
 
       if (animationFrame) cancelAnimationFrame(animationFrame);
       animationFrame = requestAnimationFrame(() => {
         if (!currentCard) return;
-        currentCard.style.transform = `translateX(${currentX}px) translateY(${currentY * 0.3}px) rotate(${rotation}deg)`;
+        currentCard.style.transform = `translateX(${currentX}px) translateY(${dy * 0.3}px) rotate(${rotation}deg)`;
 
-        // Show decision overlay based on drag direction
         const skipOv = currentCard.querySelector('.skip-overlay');
         const reqOv = currentCard.querySelector('.request-overlay');
         const threshold = 40;
@@ -1355,9 +1350,8 @@
       const card = currentCard;
       currentCard = null;
 
-      // Set dragReady=false to prevent new drags during the transition window.
-      // Re-enable AFTER the card dismissal animation completes (420ms),
-      // not after an arbitrary short delay — this closes the 50ms race window.
+      // Block new drags until dismissal animation completes (420ms).
+      // This replaces the old setTimeout(50ms) pattern that left a race window.
       dragReady = false;
 
       if (!card) {
@@ -1366,34 +1360,29 @@
       }
 
       const SWIPE_THRESHOLD = 80;
-
-      // Hide overlays
       card.querySelectorAll('.decision-overlay').forEach(o => o.style.opacity = 0);
 
       if (currentX > SWIPE_THRESHOLD) {
-        // Swiped right → request
         triggerRequest(card);
       } else if (currentX < -SWIPE_THRESHOLD) {
-        // Swiped left → skip
         triggerSkip(card);
       } else {
-        // Snap back
+        // Snap back — re-enable drag immediately
         card.style.transition = 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1)';
         card.style.transform = '';
-        dragReady = true; // ready immediately on snap-back
+        dragReady = true;
       }
     }
 
     // ── ACTION HANDLERS ──
 
     function triggerSkip(cardEl) {
-      const name = cardOrder[0] !== undefined ? getCardName(cardOrder[0]) : 'Pro';
       dismissCard('left', () => {
         reorderStack();
-        dragReady = true;
+        dragReady = true; // re-enable after animation completes
       });
 
-      // Skip toast — uses dedicated #skip-toast element, no style mutation
+      // Skip toast — uses dedicated #skip-toast; no mutation of #save-toast
       if (skipToastTimer) clearTimeout(skipToastTimer);
       skipToastEl.textContent = 'Skipped';
       skipToastEl.classList.add('show');
@@ -1408,10 +1397,9 @@
       const name = nameIdx !== undefined ? getCardName(nameIdx) : 'This pro';
       dismissCard('right', () => {
         reorderStack();
-        dragReady = true;
+        dragReady = true; // re-enable after animation completes
       });
 
-      // Show success overlay
       successSub.textContent = `${name} will respond shortly`;
       requestSuccess.classList.add('show');
       setTimeout(() => requestSuccess.classList.remove('show'), 2000);
@@ -1421,8 +1409,9 @@
       if (cardOrder.length === 0) return;
       const name = getCardName(cardOrder[0]);
 
-      // Save toast — uses dedicated #save-toast element (separate from skip-toast)
-      // No style mutation of skip-toast, so no race condition is possible.
+      // Save toast — uses dedicated #save-toast element (blue gradient, defined in CSS).
+      // No inline style mutation of #skip-toast, so no race condition is possible
+      // even if a skip fires while this timer is pending.
       if (saveToastTimer) clearTimeout(saveToastTimer);
       saveToastEl.textContent = `⭐ ${name} Saved!`;
       saveToastEl.classList.add('show');
@@ -1438,7 +1427,7 @@
       dragReady = false;
       const card = getTopCardEl();
       if (!card) { dragReady = true; return; }
-      currentX = -90; // simulate left swipe
+      currentX = -90;
       triggerSkip(card);
     }
 
@@ -1447,7 +1436,7 @@
       dragReady = false;
       const card = getTopCardEl();
       if (!card) { dragReady = true; return; }
-      currentX = 90; // simulate right swipe
+      currentX = 90;
       triggerRequest(card);
     }
 
@@ -1457,25 +1446,19 @@
     }
 
     // ── INIT ──
-    // Attach drag to the initial top card
     reorderStack();
 
-    // Hide swipe hint after first interaction
+    // Hide swipe hint chips after first interaction
     let hintHidden = false;
-    document.addEventListener('mousedown', () => {
+    function hideHint() {
       if (!hintHidden) {
         hintHidden = true;
         swipeHint.style.opacity = '0';
         setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
       }
-    }, { once: true });
-    document.addEventListener('touchstart', () => {
-      if (!hintHidden) {
-        hintHidden = true;
-        swipeHint.style.opacity = '0';
-        setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
-      }
-    }, { once: true });
+    }
+    document.addEventListener('mousedown', hideHint, { once: true });
+    document.addEventListener('touchstart', hideHint, { once: true });
   </script>
 
 </body>
