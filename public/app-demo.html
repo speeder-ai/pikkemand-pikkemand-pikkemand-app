@@ -2,1481 +2,1351 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pikkemand – Swipe to Find Your Handyman</title>
-  <meta name="description" content="Try the Pikkemand app demo — swipe right to request a pre-vetted handyman, left to skip. Find local handymen for any home repair job instantly." />
-  <meta property="og:title" content="Pikkemand – Swipe to Find Your Handyman" />
-  <meta property="og:description" content="The Tinder-style marketplace for home repairs. Post a job, swipe through vetted handymen, book instantly." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>{{COMPANY_NAME}} — Swipe to Find Your Handyman</title>
+  <meta name="description" content="{{COMPANY_NAME}} — {{COMPANY_VISION}}" />
+  <meta property="og:title" content="{{COMPANY_NAME}} — Find Your Perfect Handyman" />
+  <meta property="og:description" content="Swipe through pre-vetted handyman profiles and book instantly. Try the {{COMPANY_NAME}} prototype." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pikkemand-pikkemand-pikkemand.speederai.app/app-demo" />
+  <meta name="theme-color" content="#F59E0B" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Pikkemand",
-    "description": "Pikkemand is a mobile-first marketplace connecting homeowners with pre-vetted, rated handymen through a Tinder-style swiping interface for quick job matching.",
-    "applicationCategory": "HomeAndGarden",
-    "operatingSystem": "Web",
-    "url": "https://pikkemand-pikkemand-pikkemand.speederai.app/app-demo",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "description": "Free to post jobs and swipe handymen"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Pikkemand",
-      "url": "https://pikkemand-pikkemand-pikkemand.speederai.app",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "hello@pikkemand-pikkemand-pikkemand.speederai.app",
-        "contactType": "customer support"
-      }
-    }
-  }
-  </script>
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
 
   <style>
+    /* ─── Reset & Tokens ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --amber: #F59E0B;
-      --amber-dark: #D97706;
-      --amber-light: #FCD34D;
-      --amber-pale: #FFFBEB;
-      --red: #EF4444;
-      --green: #22C55E;
-      --blue: #3B82F6;
-      --navy: #1E293B;
-      --navy-light: #334155;
-      --gray: #94A3B8;
-      --gray-light: #E2E8F0;
-      --bg: #F1F5F9;
-      --white: #FFFFFF;
-      --text: #1E293B;
-      --text-muted: #64748B;
-      --shadow-amber: 0 8px 32px rgba(245, 158, 11, 0.2);
-      --shadow-card: 0 12px 40px rgba(0,0,0,0.12);
-      --shadow-card-hover: 0 20px 60px rgba(0,0,0,0.18);
+      --amber:       #F59E0B;
+      --amber-dark:  #D97706;
+      --amber-light: #FDE68A;
+      --amber-glow:  rgba(245,158,11,0.18);
+      --red:         #EF4444;
+      --red-glow:    rgba(239,68,68,0.15);
+      --green:       #10B981;
+      --green-glow:  rgba(16,185,129,0.15);
+      --blue:        #3B82F6;
+      --blue-glow:   rgba(59,130,246,0.15);
+      --dark:        #0F172A;
+      --text:        #1E293B;
+      --muted:       #64748B;
+      --border:      #E2E8F0;
+      --card-bg:     #FFFFFF;
+      --bg:          #F8F7F4;
+      --radius:      20px;
+      --shadow-card: 0 8px 40px rgba(15,23,42,0.12), 0 2px 8px rgba(15,23,42,0.06);
+      --shadow-btn:  0 4px 16px rgba(245,158,11,0.30);
     }
 
-    html { scroll-behavior: smooth; }
-
-    body {
+    html, body {
+      height: 100%;
+      overflow: hidden;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #0F172A 0%, #1E293B 50%, #162032 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 20px 16px 40px;
-      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      touch-action: none;
+      user-select: none;
     }
 
-    /* ── PAGE HEADER ── */
-    .page-header {
-      width: 100%;
-      max-width: 430px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 4px 16px;
-    }
-
-    .page-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .page-logo-mark {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
-      border-radius: 8px;
+    /* ─── Phone Frame Wrapper ─── */
+    .phone-frame {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      min-height: 100vh;
+      padding: 20px;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
     }
 
-    .page-logo-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.02em;
-    }
-
-    .demo-badge {
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.35);
-      color: var(--amber-light);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* ── PHONE FRAME ── */
-    .phone-frame {
-      width: 100%;
-      max-width: 390px;
-      background: #0A0F1A;
-      border-radius: 44px;
-      padding: 14px 12px;
-      box-shadow:
-        0 0 0 2px rgba(255,255,255,0.08),
-        0 30px 80px rgba(0,0,0,0.6),
-        0 60px 120px rgba(0,0,0,0.4),
-        0 0 60px rgba(245,158,11,0.08);
+    .phone {
       position: relative;
-    }
-
-    /* Phone notch */
-    .phone-frame::before {
-      content: '';
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 6px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 3px;
-      z-index: 10;
-    }
-
-    .app-screen {
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      max-height: 900px;
       background: var(--bg);
-      border-radius: 34px;
+      border-radius: 44px;
       overflow: hidden;
-      height: 760px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 30px 80px rgba(0,0,0,0.5),
+        0 0 120px rgba(245,158,11,0.08);
       display: flex;
       flex-direction: column;
-      position: relative;
     }
 
-    /* ── STATUS BAR ── */
+    /* ─── Status Bar ─── */
     .status-bar {
-      background: var(--white);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 12px 20px 6px;
+      justify-content: space-between;
+      padding: 14px 28px 0;
       font-size: 12px;
       font-weight: 600;
       color: var(--text);
       flex-shrink: 0;
+      letter-spacing: 0.01em;
     }
-
-    .status-icons {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      font-size: 11px;
+    .status-bar .time { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 15px; }
+    .status-icons { display: flex; gap: 6px; align-items: center; }
+    .battery {
+      width: 22px; height: 11px; border: 1.5px solid var(--text);
+      border-radius: 3px; position: relative;
+      display: flex; align-items: center; padding: 1.5px;
     }
+    .battery::after {
+      content: ''; position: absolute; right: -5px; top: 50%;
+      transform: translateY(-50%); width: 2.5px; height: 5px;
+      background: var(--text); border-radius: 0 2px 2px 0;
+    }
+    .battery-fill { width: 75%; height: 100%; background: var(--text); border-radius: 1px; }
 
-    /* ── TOP BAR ── */
+    /* ─── Top Nav Bar ─── */
     .top-bar {
-      background: var(--white);
-      padding: 10px 18px 14px;
-      border-bottom: 1px solid var(--gray-light);
+      padding: 12px 20px 10px;
       flex-shrink: 0;
     }
-
     .top-bar-label {
       font-size: 11px;
       font-weight: 600;
-      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
+      color: var(--muted);
       margin-bottom: 6px;
     }
-
-    .top-bar-row {
+    .job-context {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: white;
+      border-radius: 14px;
+      padding: 10px 14px;
+      box-shadow: 0 2px 12px rgba(15,23,42,0.06);
+      border: 1px solid var(--border);
     }
-
+    .job-context-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .job-icon {
+      width: 36px; height: 36px;
+      background: var(--amber-glow);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
     .job-title {
       font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .job-meta {
-      display: flex;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .job-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--amber-pale);
-      color: var(--amber-dark);
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
+      color: var(--text);
     }
-
+    .job-meta { font-size: 11px; color: var(--muted); }
     .filter-btn {
-      width: 36px;
-      height: 36px;
-      background: var(--navy);
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 16px;
-      transition: background 0.2s;
-    }
-
-    .filter-btn:hover { background: var(--navy-light); }
-
-    /* ── CARD STACK AREA ── */
-    .card-area {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-      padding: 16px 16px 4px;
-    }
-
-    .card-stack {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* ── HANDYMAN CARD ── */
-    .handyman-card {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: var(--shadow-card);
-      overflow: hidden;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-      transition: box-shadow 0.2s;
-      will-change: transform;
-    }
-
-    .handyman-card:active { cursor: grabbing; }
-    .handyman-card.top-card { z-index: 10; }
-    .handyman-card.second-card { z-index: 9; transform: scale(0.96) translateY(12px); }
-    .handyman-card.third-card { z-index: 8; transform: scale(0.92) translateY(24px); }
-
-    /* Drag decision overlays */
-    .decision-overlay {
-      position: absolute;
-      top: 20px;
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 20;
-      border: 3px solid;
-      transform: rotate(-15deg);
-      transition: opacity 0.1s;
-    }
-
-    .skip-overlay {
-      right: 20px;
-      color: var(--red);
-      border-color: var(--red);
-      background: rgba(239,68,68,0.08);
-      transform: rotate(15deg);
-    }
-
-    .request-overlay {
-      left: 20px;
-      color: var(--green);
-      border-color: var(--green);
-      background: rgba(34,197,94,0.08);
-      transform: rotate(-15deg);
-    }
-
-    /* Card header with avatar */
-    .card-header {
-      padding: 18px 18px 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--white);
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .availability-dot {
-      position: absolute;
-      bottom: -2px;
-      right: -2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 2px solid var(--white);
-    }
-
-    .availability-dot.online { background: var(--green); }
-    .availability-dot.soon { background: var(--amber); }
-
-    .card-info { flex: 1; }
-
-    .card-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .card-rating {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 3px;
-    }
-
-    .stars { color: var(--amber); font-size: 13px; }
-    .rating-num { font-size: 13px; font-weight: 600; color: var(--text); }
-    .rating-count { font-size: 12px; color: var(--text-muted); }
-
-    .card-rate {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--amber-dark);
-      letter-spacing: -0.02em;
-      flex-shrink: 0;
-    }
-
-    /* Verified + response row */
-    .card-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 18px 10px;
-    }
-
-    .verified-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
-      color: #1D4ED8;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 9px;
-      border-radius: 6px;
-    }
-
-    .response-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-      color: #15803D;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 9px;
-      border-radius: 6px;
-    }
-
-    .distance-badge {
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    /* Divider */
-    .card-divider {
-      height: 1px;
-      background: var(--gray-light);
-      margin: 0 18px 12px;
-    }
-
-    /* Bio */
-    .card-bio {
-      padding: 0 18px 14px;
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: var(--text-muted);
-    }
-
-    /* Tags */
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0 18px 16px;
-    }
-
-    .tag {
+      width: 36px; height: 36px;
       background: var(--bg);
-      color: var(--text);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--gray-light);
-    }
-
-    /* Stats row at bottom of card */
-    .card-stats {
-      background: linear-gradient(to right, #FFFBEB, #FEF3C7);
-      padding: 10px 18px;
-      display: flex;
-      justify-content: space-around;
-      border-top: 1px solid #FDE68A;
-    }
-
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .stat-value {
-      font-family: 'Poppins', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--amber-dark);
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-weight: 600;
-    }
-
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      text-align: center;
-      padding: 24px;
-    }
-
-    .empty-icon {
-      font-size: 52px;
-      margin-bottom: 16px;
-    }
-
-    .empty-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .empty-text {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    .empty-cta {
-      background: var(--amber);
-      color: var(--white);
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 22px;
-      border-radius: 12px;
-      border: none;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
       cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { background: var(--amber-light); border-color: var(--amber); }
+    .filter-badge {
+      position: relative;
+    }
+    .filter-badge::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 7px; height: 7px;
+      background: var(--amber);
+      border-radius: 50%;
+      border: 1.5px solid var(--bg);
     }
 
-    /* ── ACTION BUTTONS ── */
-    .action-bar {
-      padding: 12px 20px 8px;
+    /* ─── Match Counter ─── */
+    .match-counter {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 16px;
-      background: var(--white);
-      border-top: 1px solid var(--gray-light);
+      padding: 6px 20px 8px;
       flex-shrink: 0;
     }
-
-    .action-btn {
-      border: none;
-      cursor: pointer;
+    .counter-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .counter-dot {
+      width: 6px; height: 6px;
       border-radius: 50%;
+      background: var(--muted);
+    }
+    .counter-dot.active { background: var(--amber); }
+    .counter-sep { width: 1px; height: 14px; background: var(--border); }
+
+    /* ─── Card Stack Area ─── */
+    .card-stack-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      margin: 0 16px;
+    }
+
+    /* ─── Profile Card ─── */
+    .profile-card {
+      position: absolute;
+      inset: 0;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      cursor: grab;
+      will-change: transform;
+      transition: none;
+      display: flex;
+      flex-direction: column;
+      touch-action: none;
+    }
+    .profile-card:active { cursor: grabbing; }
+    .profile-card.animating {
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
+    }
+    .profile-card.back {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* Card visual states during drag */
+    .swipe-label {
+      position: absolute;
+      top: 28px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      border-width: 3px;
+      border-style: solid;
+      border-radius: 8px;
+      padding: 4px 14px;
+      opacity: 0;
+      transform: rotate(-12deg);
+      transition: opacity 0.1s;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .swipe-label.request { left: 20px; color: var(--green); border-color: var(--green); transform: rotate(-12deg); }
+    .swipe-label.skip    { right: 20px; color: var(--red); border-color: var(--red); transform: rotate(12deg); }
+
+    /* ─── Card Avatar / Header ─── */
+    .card-avatar-area {
+      position: relative;
+      height: 200px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .card-avatar-bg {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      flex-shrink: 0;
     }
-
-    .action-btn:hover { transform: scale(1.1); }
-    .action-btn:active { transform: scale(0.95); }
-
-    .btn-skip {
-      width: 56px;
-      height: 56px;
-      background: var(--white);
-      border: 2px solid var(--red);
-      color: var(--red);
-      font-size: 22px;
-      box-shadow: 0 4px 16px rgba(239,68,68,0.15);
+    .card-avatar-initials {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 56px;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
-
-    .btn-skip:hover { box-shadow: 0 6px 20px rgba(239,68,68,0.25); }
-
-    .btn-request {
-      width: 68px;
-      height: 68px;
-      background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
-      color: var(--white);
-      font-size: 26px;
-      box-shadow: var(--shadow-amber);
-    }
-
-    .btn-request:hover { box-shadow: 0 12px 40px rgba(245,158,11,0.35); }
-
-    .btn-save {
-      width: 56px;
-      height: 56px;
-      background: var(--white);
-      border: 2px solid var(--blue);
-      color: var(--blue);
-      font-size: 20px;
-      box-shadow: 0 4px 16px rgba(59,130,246,0.15);
-    }
-
-    .btn-save:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.25); }
-
-    .action-label {
-      font-size: 10px;
+    .card-verified-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .action-col {
+      color: var(--green);
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .card-jobs-badge {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      background: rgba(15,23,42,0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      display: flex;
       align-items: center;
       gap: 4px;
     }
 
-    /* ── BOTTOM NAV ── */
-    .bottom-nav {
-      background: var(--white);
-      border-top: 1px solid var(--gray-light);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 6px 0 10px;
+    /* ─── Card Body ─── */
+    .card-body {
+      flex: 1;
+      padding: 16px 18px 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .card-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .card-location {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .card-rate {
+      text-align: right;
+    }
+    .card-rate-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--amber-dark);
+    }
+    .card-rate-unit { font-size: 11px; color: var(--muted); }
+
+    /* Stars */
+    .stars-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .stars {
+      display: flex;
+      gap: 1px;
+    }
+    .star { color: var(--amber); font-size: 14px; }
+    .star.empty { color: #E2E8F0; }
+    .rating-text { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    /* Tags */
+    .specialty-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .tag-primary   { background: var(--amber-glow); color: var(--amber-dark); }
+    .tag-secondary { background: #EFF6FF; color: #2563EB; }
+    .tag-tertiary  { background: #F0FDF4; color: #16A34A; }
+
+    /* Bio */
+    .card-bio {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Response rate */
+    .card-metrics {
+      display: flex;
+      gap: 14px;
+    }
+    .metric {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .metric-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    /* ─── Action Buttons ─── */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 10px 20px 14px;
       flex-shrink: 0;
     }
 
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      outline: none;
+    }
+    .action-btn:active { transform: scale(0.92) !important; }
+    .action-btn:hover  { transform: scale(1.08); }
+
+    .btn-skip {
+      width: 58px; height: 58px;
+      background: white;
+      box-shadow: 0 4px 20px var(--red-glow), 0 2px 8px rgba(0,0,0,0.06);
+      border: 2px solid #FEE2E2;
+      color: var(--red);
+      font-size: 24px;
+    }
+    .btn-request {
+      width: 70px; height: 70px;
+      background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
+      box-shadow: var(--shadow-btn), 0 8px 24px rgba(245,158,11,0.35);
+      color: white;
+      font-size: 28px;
+    }
+    .btn-save {
+      width: 58px; height: 58px;
+      background: white;
+      box-shadow: 0 4px 20px var(--blue-glow), 0 2px 8px rgba(0,0,0,0.06);
+      border: 2px solid #DBEAFE;
+      color: var(--blue);
+      font-size: 22px;
+    }
+
+    /* ─── Bottom Navigation ─── */
+    .bottom-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px 10px 20px;
+      background: white;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
       cursor: pointer;
-      padding: 4px 0;
-      transition: color 0.15s;
+      padding: 6px 14px;
+      border-radius: 12px;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .nav-item:hover { background: var(--amber-glow); }
+    .nav-icon {
+      font-size: 22px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-item.active .nav-icon { color: var(--amber-dark); }
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .nav-item.active .nav-label { color: var(--amber-dark); }
+    .nav-badge {
+      position: absolute;
+      top: 4px; right: 10px;
+      background: var(--red);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .nav-item .nav-icon { font-size: 20px; }
-    .nav-item .nav-label { font-size: 10px; font-weight: 600; color: var(--gray); letter-spacing: 0.03em; }
-    .nav-item.active .nav-label { color: var(--amber-dark); }
-    .nav-item.active .nav-icon { filter: none; }
-
-    /* ── TOAST NOTIFICATIONS ── */
-    .toast {
-      position: absolute;
-      bottom: 140px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      padding: 10px 20px;
-      border-radius: 50px;
+    /* ─── Empty State ─── */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+    .empty-icon {
+      width: 80px; height: 80px;
+      background: var(--amber-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+    .empty-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .empty-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .empty-reload {
+      background: var(--amber);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
       font-family: 'Poppins', sans-serif;
       font-size: 14px;
       font-weight: 600;
-      color: var(--white);
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 100;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      transition: all 0.2s;
     }
+    .empty-reload:hover { background: var(--amber-dark); transform: translateY(-1px); }
 
+    /* ─── Toast Notification ─── */
+    .toast {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--dark);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      white-space: nowrap;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1000;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.25);
+    }
     .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+    .toast.request-toast { background: linear-gradient(135deg, #10B981, #059669); }
+    .toast.skip-toast    { background: linear-gradient(135deg, #64748B, #475569); }
+    .toast.save-toast    { background: linear-gradient(135deg, #3B82F6, #2563EB); }
 
-    /* Skip toast - red */
-    #skip-toast {
-      background: linear-gradient(135deg, #EF4444, #DC2626);
+    /* ─── Swipe Hint Animation ─── */
+    @keyframes hintSwipe {
+      0%   { transform: rotate(0deg) translateX(0); }
+      25%  { transform: rotate(4deg) translateX(16px); }
+      50%  { transform: rotate(0deg) translateX(0); }
+      75%  { transform: rotate(-4deg) translateX(-16px); }
+      100% { transform: rotate(0deg) translateX(0); }
+    }
+    .hint-animate { animation: hintSwipe 1.4s ease-in-out 1.2s 1 forwards; }
+
+    /* ─── Card Back Peek Effect ─── */
+    .card-2 {
+      transform: translateY(10px) scale(0.95);
+      z-index: 1;
+    }
+    .card-3 {
+      transform: translateY(20px) scale(0.90);
+      z-index: 0;
     }
 
-    /* Save toast - blue (separate element, no style mutation needed) */
-    #save-toast {
-      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
-    }
-
-    /* Request success overlay */
-    .request-success {
+    /* ─── Drag Overlay Tint ─── */
+    .drag-tint {
       position: absolute;
       inset: 0;
-      background: rgba(34,197,94,0.92);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
+      border-radius: var(--radius);
+      pointer-events: none;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      border-radius: 34px;
-    }
-
-    .request-success.show { opacity: 1; pointer-events: all; }
-
-    .success-icon {
-      font-size: 72px;
-      margin-bottom: 16px;
-      animation: bounceIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
-    }
-
-    .success-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .success-sub {
-      font-size: 15px;
-      color: rgba(255,255,255,0.85);
-    }
-
-    @keyframes bounceIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    /* ── PAGE FOOTER (below phone) ── */
-    .page-footer {
-      width: 100%;
-      max-width: 430px;
-      text-align: center;
-      margin-top: 24px;
-      padding: 0 16px;
-    }
-
-    .footer-text {
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .footer-link {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--amber-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-link:hover { color: var(--amber); }
-
-    /* ── SWIPE HINT OVERLAY ── */
-    .swipe-hint {
-      position: absolute;
-      bottom: 16px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      pointer-events: none;
+      transition: opacity 0.1s;
       z-index: 5;
     }
+    .drag-tint.request { background: linear-gradient(135deg, rgba(16,185,129,0.18), transparent); }
+    .drag-tint.skip    { background: linear-gradient(225deg, rgba(239,68,68,0.18), transparent); }
 
-    .hint-chip {
-      background: rgba(0,0,0,0.55);
-      color: rgba(255,255,255,0.8);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      backdrop-filter: blur(4px);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 440px) {
-      .phone-frame { border-radius: 32px; padding: 12px 8px; }
-      .app-screen { border-radius: 24px; height: 680px; }
-      body { padding: 12px 8px 32px; }
-    }
-
-    @media (min-width: 600px) {
-      body { padding: 40px 16px 60px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    /* Responsive: on very narrow screens, remove phone frame */
+    @media (max-width: 500px) {
+      .phone-frame { padding: 0; background: var(--bg); }
+      .phone {
+        border-radius: 0;
+        max-height: 100vh;
+        height: 100vh;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── PAGE HEADER ── -->
-  <header class="page-header">
-    <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="page-logo">
-      <div class="page-logo-mark">🔧</div>
-      <span class="page-logo-text">Pikkemand</span>
-    </a>
-    <span class="demo-badge">Live Demo</span>
-  </header>
+<div class="phone-frame">
+  <div class="phone" id="app">
 
-  <!-- ── PHONE FRAME ── -->
-  <div class="phone-frame">
-    <div class="app-screen">
-
-      <!-- Status Bar -->
-      <div class="status-bar">
-        <span>9:41</span>
-        <div class="status-icons">
-          <span>▲▼</span>
-          <span>WiFi</span>
-          <span>🔋</span>
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+          <rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor" opacity="0.4"/>
+          <rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor" opacity="0.6"/>
+          <rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor" opacity="0.8"/>
+          <rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor"/>
+        </svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+          <path d="M8 1.5C10.5 1.5 12.7 2.6 14.2 4.3L15.5 3C13.6 1.1 11 0 8 0C5 0 2.4 1.1 0.5 3L1.8 4.3C3.3 2.6 5.5 1.5 8 1.5Z" opacity="0.4"/>
+          <path d="M8 4.5C9.7 4.5 11.2 5.2 12.3 6.4L13.6 5.1C12.1 3.5 10.2 2.5 8 2.5C5.8 2.5 3.9 3.5 2.4 5.1L3.7 6.4C4.8 5.2 6.3 4.5 8 4.5Z" opacity="0.7"/>
+          <circle cx="8" cy="10" r="2"/>
+        </svg>
+        <div class="battery">
+          <div class="battery-fill"></div>
         </div>
       </div>
+    </div>
 
-      <!-- Top Bar -->
-      <div class="top-bar">
-        <div class="top-bar-label">Active Job</div>
-        <div class="top-bar-row">
+    <!-- Top Bar / Job Context -->
+    <div class="top-bar">
+      <div class="top-bar-label">Your Active Job</div>
+      <div class="job-context">
+        <div class="job-context-left">
+          <div class="job-icon">🔧</div>
           <div>
             <div class="job-title">Fix leaky kitchen faucet</div>
-            <div class="job-meta">
-              <span class="job-tag">6 handymen available</span>
-              <span class="job-tag">≤ 5 km</span>
-            </div>
+            <div class="job-meta">Posted 2h ago · Tallinn, Estonia</div>
           </div>
-          <button class="filter-btn" aria-label="Filter handymen">⚙</button>
+        </div>
+        <div class="filter-btn filter-badge" onclick="showToast('Filters coming soon!', 'save')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+          </svg>
         </div>
       </div>
-
-      <!-- Card Stack Area -->
-      <div class="card-area" id="card-area">
-        <div class="card-stack" id="card-stack">
-
-          <!-- Card 1: Mati Sepp -->
-          <div class="handyman-card top-card" id="card-0" data-name="Mati" data-index="0">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                MS
-                <div class="availability-dot soon"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Mati Sepp</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-num">4.9</span>
-                  <span class="rating-count">· 234 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€85/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Replies in 20 min</span>
-              <span class="distance-badge">📍 1.8 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              15 years in plumbing and pipe systems. Fast, clean work with a warranty.
-              Tallinn native, know every building type in the city.
-            </div>
-            <div class="card-tags">
-              <span class="tag">🔧 Plumbing</span>
-              <span class="tag">🚿 Bathroom Fit</span>
-              <span class="tag">💧 Leak Repair</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">234</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">15yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Card 2: Kristjan Pärn -->
-          <div class="handyman-card second-card" id="card-1" data-name="Kristjan" data-index="1">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">
-                KP
-                <div class="availability-dot soon"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Kristjan Pärn</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-num">4.8</span>
-                  <span class="rating-count">· 187 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€95/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Replies in 1 hr</span>
-              <span class="distance-badge">📍 2.3 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              Licensed electrician with certification for residential &amp; commercial.
-              No shortcuts, no fire hazards — just professional work you can trust.
-            </div>
-            <div class="card-tags">
-              <span class="tag">⚡ Electrical</span>
-              <span class="tag">🔌 Installations</span>
-              <span class="tag">🏠 Smart Home</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">187</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">4.8★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">12yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Card 3: Annika Tamm -->
-          <div class="handyman-card third-card" id="card-2" data-name="Annika" data-index="2">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                AT
-                <div class="availability-dot online"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Annika Tamm</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-num">5.0</span>
-                  <span class="rating-count">· 156 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€70/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Replies in 30 min</span>
-              <span class="distance-badge">📍 3.1 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              Interior &amp; exterior painting with an eye for detail.
-              I use eco-friendly paints and always leave your home cleaner than I found it.
-            </div>
-            <div class="card-tags">
-              <span class="tag">🎨 Painting</span>
-              <span class="tag">🖌️ Wallpaper</span>
-              <span class="tag">✨ Finishing</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">156</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">5.0★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">8yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Card 4: Toomas Kask -->
-          <div class="handyman-card" id="card-3" data-name="Toomas" data-index="3" style="z-index:7; transform: scale(0.88) translateY(36px);">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #10B981, #059669);">
-                TK
-                <div class="availability-dot online"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Toomas Kask</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★☆</span>
-                  <span class="rating-num">4.7</span>
-                  <span class="rating-count">· 312 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€80/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Available now</span>
-              <span class="distance-badge">📍 4.5 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              Furniture assembly, shelving, doors, and custom woodwork.
-              If it's made of wood, I can build or fix it. Same-day slots available this week.
-            </div>
-            <div class="card-tags">
-              <span class="tag">🪵 Carpentry</span>
-              <span class="tag">📦 Assembly</span>
-              <span class="tag">🚪 Doors &amp; Locks</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">312</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">4.7★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">10yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Card 5: Peeter Lõhmus -->
-          <div class="handyman-card" id="card-4" data-name="Peeter" data-index="4" style="z-index:6; transform: scale(0.84) translateY(48px);">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
-                PL
-                <div class="availability-dot soon"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Peeter Lõhmus</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-num">4.9</span>
-                  <span class="rating-count">· 89 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€65/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Replies in 45 min</span>
-              <span class="distance-badge">📍 1.2 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              Your go-to guy for everything around the house. Plumbing, drywall, tiling,
-              assembly — jack of all trades, master of customer satisfaction.
-            </div>
-            <div class="card-tags">
-              <span class="tag">🔨 General</span>
-              <span class="tag">🪟 Tiling</span>
-              <span class="tag">🧱 Drywall</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">89</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">6yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Card 6: Jüri Rebane -->
-          <div class="handyman-card" id="card-5" data-name="Jüri" data-index="5" style="z-index:5; transform: scale(0.80) translateY(60px);">
-            <div class="decision-overlay skip-overlay">SKIP</div>
-            <div class="decision-overlay request-overlay">REQUEST</div>
-            <div class="card-header">
-              <div class="avatar" style="background: linear-gradient(135deg, #EF4444, #DC2626);">
-                JR
-                <div class="availability-dot online"></div>
-              </div>
-              <div class="card-info">
-                <div class="card-name">Jüri Rebane</div>
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span class="rating-num">4.9</span>
-                  <span class="rating-count">· 421 jobs</span>
-                </div>
-              </div>
-              <div class="card-rate">€75/hr</div>
-            </div>
-            <div class="card-meta-row">
-              <span class="verified-badge">✔ Verified Pro</span>
-              <span class="response-badge">⚡ Available now</span>
-              <span class="distance-badge">📍 0.8 km</span>
-            </div>
-            <div class="card-divider"></div>
-            <div class="card-bio">
-              Top-rated plumber in Tallinn for 3 years running. Faucets, boilers, pipes —
-              I fix it fast and right the first time. Weekend slots open this week.
-            </div>
-            <div class="card-tags">
-              <span class="tag">🔧 Plumbing</span>
-              <span class="tag">💧 Faucet Repair</span>
-              <span class="tag">🔨 General</span>
-            </div>
-            <div class="card-stats">
-              <div class="stat-item"><span class="stat-value">421</span><span class="stat-label">Jobs Done</span></div>
-              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
-              <div class="stat-item"><span class="stat-value">18yr</span><span class="stat-label">Experience</span></div>
-            </div>
-          </div>
-
-          <!-- Empty State (shown when all cards swiped) -->
-          <div class="empty-state" id="empty-state">
-            <div class="empty-icon">🔍</div>
-            <div class="empty-title">You've seen them all!</div>
-            <p class="empty-text">
-              No more handymen in your area right now.<br>
-              New pros join Pikkemand every day.
-            </p>
-            <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="empty-cta">
-              See More Handymen →
-            </a>
-          </div>
-
-          <!-- Swipe hint chips -->
-          <div class="swipe-hint" id="swipe-hint">
-            <span class="hint-chip">✕ Swipe left to skip</span>
-            <span class="hint-chip">♥ Swipe right to request</span>
-            <span class="hint-chip">★ Tap star to save</span>
-          </div>
-
-        </div><!-- /card-stack -->
-
-        <!-- Request Success Overlay -->
-        <div class="request-success" id="request-success">
-          <div class="success-icon">🎉</div>
-          <div class="success-title">Request Sent!</div>
-          <p class="success-sub" id="success-sub">They will respond shortly</p>
-        </div>
-
-        <!-- Skip toast -->
-        <div class="toast" id="skip-toast">Skipped</div>
-
-        <!-- Save toast (dedicated element — no style mutation of skip-toast) -->
-        <div class="toast" id="save-toast"></div>
-
-      </div><!-- /card-area -->
-
-      <!-- Action Buttons -->
-      <div class="action-bar" id="action-bar">
-        <div class="action-col">
-          <button class="action-btn btn-skip" id="btn-skip" onclick="handleSkip()" aria-label="Skip this handyman">✕</button>
-          <span class="action-label">Skip</span>
-        </div>
-        <div class="action-col">
-          <button class="action-btn btn-request" id="btn-request" onclick="handleRequest()" aria-label="Request this handyman">♥</button>
-          <span class="action-label">Request</span>
-        </div>
-        <div class="action-col">
-          <button class="action-btn btn-save" id="btn-save" onclick="handleSave()" aria-label="Save this handyman for later">★</button>
-          <span class="action-label">Save</span>
-        </div>
-      </div>
-
-      <!-- Bottom Nav -->
-      <nav class="bottom-nav" aria-label="App navigation">
-        <div class="nav-item active">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-label">Home</span>
-        </div>
-        <div class="nav-item">
-          <span class="nav-icon">📋</span>
-          <span class="nav-label">My Tasks</span>
-        </div>
-        <div class="nav-item">
-          <span class="nav-icon">💬</span>
-          <span class="nav-label">Messages</span>
-        </div>
-        <div class="nav-item">
-          <span class="nav-icon">👤</span>
-          <span class="nav-label">Profile</span>
-        </div>
-      </nav>
-
-    </div><!-- /app-screen -->
-  </div><!-- /phone-frame -->
-
-  <!-- ── PAGE FOOTER ── -->
-  <footer class="page-footer">
-    <p class="footer-text">
-      This is an interactive prototype of Pikkemand · Swipe to experience the product
-    </p>
-    <div class="footer-links">
-      <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Learn More →</a>
-      <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Get Early Access</a>
-      <a href="mailto:hello@pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Contact Us</a>
     </div>
-  </footer>
 
-  <script>
-    // ── STATE ──
-    // All 6 cards indexed 0-5. cardOrder tracks which cards remain.
-    const TOTAL_CARDS = 6;
-    let cardOrder = [0, 1, 2, 3, 4, 5]; // front → back
-    let currentCard = null;
-    let isDragging = false;
-    let dragReady = true; // guard to prevent drag during 50ms reset window
+    <!-- Match Counter / Progress -->
+    <div class="match-counter">
+      <div class="counter-item">
+        <div class="counter-dot active"></div>
+        <span id="remaining-count">6 available</span>
+      </div>
+      <div class="counter-sep"></div>
+      <div class="counter-item">
+        <div class="counter-dot" style="background:#10B981"></div>
+        <span id="request-count">0 requested</span>
+      </div>
+      <div class="counter-sep"></div>
+      <div class="counter-item">
+        <div class="counter-dot" style="background:#3B82F6"></div>
+        <span id="saved-count">0 saved</span>
+      </div>
+    </div>
 
-    // Drag state
-    let startX = 0, startY = 0, currentX = 0;
-    let animationFrame = null;
+    <!-- Card Stack Area -->
+    <div class="card-stack-area" id="cardStack">
 
-    // Toast timers (separate for skip and save to avoid race conditions)
-    let skipToastTimer = null;
-    let saveToastTimer = null;
+      <!-- Empty State (shown when all cards are done) -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🏠</div>
+        <div class="empty-title">You've seen them all!</div>
+        <div class="empty-sub">No worries — more vetted handymen are joining {{COMPANY_NAME}} every day.</div>
+        <button class="empty-reload" onclick="resetDeck()">🔄 Load More Handymen</button>
+      </div>
 
-    // DOM refs
-    const cardStack = document.getElementById('card-stack');
-    const emptyState = document.getElementById('empty-state');
-    const swipeHint = document.getElementById('swipe-hint');
-    const requestSuccess = document.getElementById('request-success');
-    const successSub = document.getElementById('success-sub');
-    const skipToastEl = document.getElementById('skip-toast');
-    const saveToastEl = document.getElementById('save-toast');
-    const actionBar = document.getElementById('action-bar');
+      <!-- Cards rendered by JS -->
+    </div>
 
-    // ── CARD MANAGEMENT ──
-    function getTopCardEl() {
-      if (cardOrder.length === 0) return null;
-      return document.getElementById('card-' + cardOrder[0]);
+    <!-- Action Buttons -->
+    <div class="action-bar" id="actionBar">
+      <button class="action-btn btn-skip" onclick="triggerSkip()" title="Skip handyman">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <button class="action-btn btn-request" onclick="triggerRequest()" title="Request handyman">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white" stroke="none">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </button>
+      <button class="action-btn btn-save" onclick="triggerSave()" title="Save for later">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="setNav(this)">
+        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="nav-label">Home</span>
+      </div>
+      <div class="nav-item" onclick="setNav(this)">
+        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <span class="nav-label">My Tasks</span>
+        <div class="nav-badge">1</div>
+      </div>
+      <div class="nav-item" onclick="setNav(this)">
+        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        <span class="nav-label">Messages</span>
+      </div>
+      <div class="nav-item" onclick="setNav(this)">
+        <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span class="nav-label">Profile</span>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+  </div><!-- /.phone -->
+</div><!-- /.phone-frame -->
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  HANDYMAN DATA — Pre-populated with realistic Estonian/Nordic profiles
+  // ─────────────────────────────────────────────────────────────
+  const handymen = [
+    {
+      id: 1,
+      name: "Marten Kallas",
+      initials: "MK",
+      color: "linear-gradient(135deg, #667EEA, #764BA2)",
+      rating: 4.9,
+      reviews: 127,
+      rate: 85,
+      distance: "1.2 km",
+      jobs: 312,
+      responseTime: "< 30 min",
+      responseRate: "98%",
+      specialties: ["Plumbing", "Bathroom Renovations", "Leak Repairs"],
+      tagTypes: ["primary", "secondary", "tertiary"],
+      bio: "Certified plumber with 8 years of experience. I specialize in quick leak repairs and full bathroom renovations. Satisfaction guaranteed.",
+      available: true,
+    },
+    {
+      id: 2,
+      name: "Liisa Tamm",
+      initials: "LT",
+      color: "linear-gradient(135deg, #F093FB, #F5576C)",
+      rating: 4.8,
+      reviews: 89,
+      rate: 72,
+      distance: "2.3 km",
+      jobs: 184,
+      responseTime: "< 1 hr",
+      responseRate: "95%",
+      specialties: ["Painting", "Interior Design", "Wallpaper"],
+      tagTypes: ["tertiary", "primary", "secondary"],
+      bio: "Interior specialist with a keen eye for detail. Transform your living space — I handle everything from feature walls to full-room makeovers.",
+      available: true,
+    },
+    {
+      id: 3,
+      name: "Jüri Sepp",
+      initials: "JS",
+      color: "linear-gradient(135deg, #4FACFE, #00F2FE)",
+      rating: 4.7,
+      reviews: 203,
+      rate: 95,
+      distance: "3.5 km",
+      jobs: 456,
+      responseTime: "< 45 min",
+      responseRate: "97%",
+      specialties: ["Electrical", "Smart Home", "Lighting"],
+      tagTypes: ["secondary", "primary", "tertiary"],
+      bio: "Licensed electrician (EL-1 certified). Safe, reliable electrical work including smart home setups, panel upgrades, and LED lighting installations.",
+      available: true,
+    },
+    {
+      id: 4,
+      name: "Kristiina Pärn",
+      initials: "KP",
+      color: "linear-gradient(135deg, #43E97B, #38F9D7)",
+      rating: 4.9,
+      reviews: 61,
+      rate: 68,
+      distance: "0.8 km",
+      jobs: 98,
+      responseTime: "< 20 min",
+      responseRate: "100%",
+      specialties: ["General Repairs", "IKEA Assembly", "Shelving"],
+      tagTypes: ["primary", "tertiary", "secondary"],
+      bio: "Your neighbourhood all-rounder! Quick, clean, and affordable. I love tackling those annoying little jobs that pile up around the home.",
+      available: true,
+    },
+    {
+      id: 5,
+      name: "Andres Mägi",
+      initials: "AM",
+      color: "linear-gradient(135deg, #FA709A, #FEE140)",
+      rating: 4.6,
+      reviews: 145,
+      rate: 110,
+      distance: "4.1 km",
+      jobs: 287,
+      responseTime: "< 2 hrs",
+      responseRate: "92%",
+      specialties: ["Carpentry", "Custom Furniture", "Flooring"],
+      tagTypes: ["secondary", "primary", "tertiary"],
+      bio: "Master carpenter with workshop in Tallinn. Bespoke shelving, custom cabinetry, hardwood flooring — quality craftsmanship that lasts decades.",
+      available: true,
+    },
+    {
+      id: 6,
+      name: "Toomas Veski",
+      initials: "TV",
+      color: "linear-gradient(135deg, #A18CD1, #FBC2EB)",
+      rating: 4.8,
+      reviews: 72,
+      rate: 78,
+      distance: "2.8 km",
+      jobs: 156,
+      responseTime: "< 1 hr",
+      responseRate: "96%",
+      specialties: ["Tiling", "Bathroom Fitting", "Waterproofing"],
+      tagTypes: ["tertiary", "secondary", "primary"],
+      bio: "Tiling and wet-room specialist. Perfect finishes every time. From small backsplash repairs to complete bathroom tiling — I do it right.",
+      available: true,
+    },
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+  //  STATE MANAGEMENT
+  // ─────────────────────────────────────────────────────────────
+  let deck = [...handymen];            // Remaining cards to show
+  let requestedCount = 0;              // # of right-swipes
+  let savedCount = 0;                  // # of star-saves
+  let activeCard = null;               // The top card DOM element
+  let isDragging = false;
+  let startX = 0, startY = 0;
+  let currentX = 0, currentY = 0;
+
+  // Swipe threshold (pixels to count as a swipe)
+  const SWIPE_THRESHOLD = 80;
+
+  // ─────────────────────────────────────────────────────────────
+  //  CARD RENDERING
+  // ─────────────────────────────────────────────────────────────
+
+  /**
+   * Renders star rating icons.
+   * @param {number} rating - Rating 0-5 (supports half stars via visual rounding)
+   * @returns {string} HTML string of star SVGs
+   */
+  function renderStars(rating) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      const full = i <= Math.floor(rating);
+      const half = !full && i === Math.ceil(rating) && (rating % 1) >= 0.5;
+      const cls = full || half ? 'star' : 'star empty';
+      html += `<span class="${cls}">${full || half ? '★' : '★'}</span>`;
+    }
+    return html;
+  }
+
+  /**
+   * Renders a tag with appropriate color class.
+   * @param {string} text - Tag label
+   * @param {string} type - 'primary' | 'secondary' | 'tertiary'
+   * @returns {string} Tag HTML
+   */
+  function renderTag(text, type) {
+    return `<span class="tag tag-${type}">${text}</span>`;
+  }
+
+  /**
+   * Builds a single profile card element for a handyman.
+   * @param {object} data - Handyman profile data
+   * @param {number} stackPos - 0=top, 1=second, 2=third (for visual stacking)
+   * @returns {HTMLElement} The card element
+   */
+  function buildCard(data, stackPos) {
+    const card = document.createElement('div');
+    card.className = `profile-card${stackPos > 0 ? ` back card-${stackPos + 1}` : ''}`;
+    card.dataset.id = data.id;
+
+    const tagsHtml = data.specialties.map((s, i) => renderTag(s, data.tagTypes[i] || 'primary')).join('');
+
+    card.innerHTML = `
+      <!-- Swipe Direction Labels (shown during drag) -->
+      <span class="swipe-label request" id="label-request-${data.id}">REQUEST ✓</span>
+      <span class="swipe-label skip" id="label-skip-${data.id}">SKIP ✗</span>
+
+      <!-- Drag overlay tint -->
+      <div class="drag-tint" id="tint-${data.id}"></div>
+
+      <!-- Avatar Area -->
+      <div class="card-avatar-area">
+        <div class="card-avatar-bg" style="background: ${data.color}">
+          <span class="card-avatar-initials">${data.initials}</span>
+        </div>
+        <div class="card-verified-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#10B981">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          Pre-vetted
+        </div>
+        <div class="card-jobs-badge">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="white">
+            <path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.05 15.96 0 13.36 0c-1.31 0-2.48.53-3.37 1.36L9 2.4l-1-1.04C7.12.53 5.95 0 4.64 0 2.05 0 0 2.05 0 4.64c0 .48.11.92.18 1.36H0v14c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/>
+          </svg>
+          ${data.jobs} jobs done
+        </div>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="card-header-row">
+          <div>
+            <div class="card-name">${data.name}</div>
+            <div class="card-location">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              ${data.distance} away · ${data.available ? '🟢 Available now' : '🔴 Busy'}
+            </div>
+          </div>
+          <div class="card-rate">
+            <div class="card-rate-value">€${data.rate}</div>
+            <div class="card-rate-unit">/hour</div>
+          </div>
+        </div>
+
+        <div class="stars-row">
+          <div class="stars">${renderStars(data.rating)}</div>
+          <span class="rating-text">${data.rating} (${data.reviews} reviews)</span>
+        </div>
+
+        <div class="specialty-tags">${tagsHtml}</div>
+
+        <div class="card-bio">${data.bio}</div>
+
+        <div class="card-metrics">
+          <div class="metric">
+            <div class="metric-dot" style="background:#F59E0B"></div>
+            Responds ${data.responseTime}
+          </div>
+          <div class="metric">
+            <div class="metric-dot" style="background:#10B981"></div>
+            ${data.responseRate} response rate
+          </div>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  /**
+   * Renders up to 3 cards at a time (top card + 2 peeking behind).
+   * This approach limits DOM complexity for performance.
+   */
+  function renderDeck() {
+    const stack = document.getElementById('cardStack');
+    // Remove all existing cards (leave empty state)
+    const existing = stack.querySelectorAll('.profile-card');
+    existing.forEach(c => c.remove());
+
+    if (deck.length === 0) {
+      document.getElementById('emptyState').style.display = 'flex';
+      document.getElementById('actionBar').style.opacity = '0.4';
+      document.getElementById('actionBar').style.pointerEvents = 'none';
+      updateCounters();
+      return;
     }
 
-    function getCardName(cardIndex) {
-      const el = document.getElementById('card-' + cardIndex);
-      return el ? (el.dataset.name || 'This pro') : 'This pro';
-    }
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('actionBar').style.opacity = '1';
+    document.getElementById('actionBar').style.pointerEvents = 'auto';
 
-    function reorderStack() {
-      // Apply z-index and stacking transforms based on position in queue
-      cardOrder.forEach((idx, pos) => {
-        const el = document.getElementById('card-' + idx);
-        if (!el) return;
-        el.className = 'handyman-card';
-        if (pos === 0) {
-          el.classList.add('top-card');
-          el.style.transform = '';
-          el.style.zIndex = 10;
-        } else if (pos === 1) {
-          el.classList.add('second-card');
-          el.style.zIndex = 9;
-          el.style.transform = 'scale(0.96) translateY(12px)';
-        } else if (pos === 2) {
-          el.classList.add('third-card');
-          el.style.zIndex = 8;
-          el.style.transform = 'scale(0.92) translateY(24px)';
-        } else {
-          el.style.zIndex = Math.max(1, 10 - pos);
-          const scale = Math.max(0.80, 0.96 - pos * 0.04);
-          const translateY = pos * 12;
-          el.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-        }
-      });
+    // Render up to 3 cards (reverse order so top card is rendered last = on top)
+    const toRender = deck.slice(0, 3).reverse();
+    toRender.forEach((data, revIdx) => {
+      const stackPos = (toRender.length - 1) - revIdx; // 0 = top card
+      const card = buildCard(data, stackPos);
+      stack.appendChild(card);
+    });
 
-      if (cardOrder.length === 0) {
-        emptyState.style.display = 'flex';
-        swipeHint.style.display = 'none';
-        actionBar.style.opacity = '0.4';
-        actionBar.style.pointerEvents = 'none';
-      } else {
-        emptyState.style.display = 'none';
-        swipeHint.style.display = 'flex';
-        actionBar.style.opacity = '1';
-        actionBar.style.pointerEvents = 'auto';
-        // Attach drag to new top card immediately
-        attachDrag(getTopCardEl());
+    // Attach drag handlers to the top card only
+    const topCard = stack.querySelector('.profile-card:not(.back)');
+    if (topCard) {
+      activeCard = topCard;
+      attachDragHandlers(topCard);
+      // Hint animation on first load
+      if (deck.length === handymen.length) {
+        setTimeout(() => topCard.classList.add('hint-animate'), 800);
       }
     }
 
-    // Remove top card and animate it off screen
-    function dismissCard(direction, onComplete) {
-      const topIdx = cardOrder[0];
-      const el = document.getElementById('card-' + topIdx);
-      if (!el) { onComplete && onComplete(); return; }
+    updateCounters();
+  }
 
-      const xTarget = direction === 'right' ? 600 : -600;
-      const rotation = direction === 'right' ? 30 : -30;
+  // ─────────────────────────────────────────────────────────────
+  //  COUNTER UPDATES
+  // ─────────────────────────────────────────────────────────────
 
-      el.style.transition = 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease';
-      el.style.transform = `translateX(${xTarget}px) rotate(${rotation}deg)`;
-      el.style.opacity = '0';
+  function updateCounters() {
+    document.getElementById('remaining-count').textContent = `${deck.length} available`;
+    document.getElementById('request-count').textContent = `${requestedCount} requested`;
+    document.getElementById('saved-count').textContent = `${savedCount} saved`;
+  }
 
-      cardOrder.shift();
+  // ─────────────────────────────────────────────────────────────
+  //  DRAG / SWIPE EVENT HANDLERS
+  // ─────────────────────────────────────────────────────────────
 
+  /**
+   * Attaches pointer, mouse, and touch event listeners to a card.
+   * Unified pointer events are used for cross-device support.
+   * @param {HTMLElement} card - The card DOM element
+   */
+  function attachDragHandlers(card) {
+    // Pointer Events (modern browsers — handles both touch and mouse)
+    card.addEventListener('pointerdown', onDragStart, { passive: true });
+    card.addEventListener('pointermove', onDragMove, { passive: true });
+    card.addEventListener('pointerup', onDragEnd, { passive: true });
+    card.addEventListener('pointercancel', onDragCancel, { passive: true });
+
+    // Prevent context menu on long press
+    card.addEventListener('contextmenu', e => e.preventDefault());
+  }
+
+  function onDragStart(e) {
+    if (isDragging) return;
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    currentX = 0;
+    currentY = 0;
+
+    activeCard.style.transition = 'none'; // Disable transition during active drag
+    activeCard.setPointerCapture(e.pointerId);
+  }
+
+  function onDragMove(e) {
+    if (!isDragging || !activeCard) return;
+
+    currentX = e.clientX - startX;
+    currentY = e.clientY - startY;
+
+    // Rotation: tilt card proportional to horizontal drag
+    const rotation = currentX * 0.08; // ~8 degrees at full threshold
+    activeCard.style.transform = `translate(${currentX}px, ${currentY * 0.4}px) rotate(${rotation}deg)`;
+
+    // Calculate swipe intention (0 to 1 in each direction)
+    const swipeRatio = Math.abs(currentX) / SWIPE_THRESHOLD;
+    const clamped = Math.min(swipeRatio, 1);
+
+    // Show directional labels and tint overlay
+    const cardId = activeCard.dataset.id;
+    const requestLabel = document.getElementById(`label-request-${cardId}`);
+    const skipLabel = document.getElementById(`label-skip-${cardId}`);
+    const tint = document.getElementById(`tint-${cardId}`);
+
+    if (currentX > 20) {
+      // Swiping right = REQUEST
+      if (requestLabel) requestLabel.style.opacity = clamped;
+      if (skipLabel) skipLabel.style.opacity = 0;
+      if (tint) { tint.className = 'drag-tint request'; tint.style.opacity = clamped * 0.6; }
+    } else if (currentX < -20) {
+      // Swiping left = SKIP
+      if (skipLabel) skipLabel.style.opacity = clamped;
+      if (requestLabel) requestLabel.style.opacity = 0;
+      if (tint) { tint.className = 'drag-tint skip'; tint.style.opacity = clamped * 0.6; }
+    } else {
+      // Center: hide labels
+      if (requestLabel) requestLabel.style.opacity = 0;
+      if (skipLabel) skipLabel.style.opacity = 0;
+      if (tint) tint.style.opacity = 0;
+    }
+  }
+
+  function onDragEnd(e) {
+    if (!isDragging || !activeCard) return;
+    isDragging = false;
+
+    // Decision: has user swiped past the threshold?
+    if (currentX > SWIPE_THRESHOLD) {
+      // Right swipe = REQUEST
+      flyOut('right');
+    } else if (currentX < -SWIPE_THRESHOLD) {
+      // Left swipe = SKIP
+      flyOut('left');
+    } else {
+      // Snap back to center
+      snapBack();
+    }
+  }
+
+  function onDragCancel() {
+    if (!isDragging) return;
+    isDragging = false;
+    snapBack();
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  CARD ANIMATIONS
+  // ─────────────────────────────────────────────────────────────
+
+  /**
+   * Animates the top card flying off in a given direction.
+   * @param {'left'|'right'} direction
+   */
+  function flyOut(direction) {
+    if (!activeCard) return;
+
+    const card = activeCard;
+    activeCard = null;
+
+    // Determine exit rotation and X position
+    const exitX = direction === 'right' ? 800 : -800;
+    const exitRotation = direction === 'right' ? 25 : -25;
+
+    card.classList.add('animating');
+    card.style.transform = `translate(${exitX}px, ${currentY * 0.3}px) rotate(${exitRotation}deg)`;
+    card.style.opacity = '0';
+
+    // Process action
+    if (direction === 'right') {
+      handleRequest(card.dataset.id);
+    } else {
+      handleSkip(card.dataset.id);
+    }
+
+    // Remove card and re-render deck after animation
+    setTimeout(() => {
+      card.remove();
+      renderDeck();
+    }, 380);
+  }
+
+  /**
+   * Snaps card back to center (when drag didn't exceed threshold).
+   */
+  function snapBack() {
+    if (!activeCard) return;
+    const card = activeCard;
+    card.classList.add('animating');
+    card.style.transform = '';
+    card.style.opacity = '1';
+
+    // Reset labels/tint
+    const cardId = card.dataset.id;
+    const requestLabel = document.getElementById(`label-request-${cardId}`);
+    const skipLabel = document.getElementById(`label-skip-${cardId}`);
+    const tint = document.getElementById(`tint-${cardId}`);
+    if (requestLabel) requestLabel.style.opacity = 0;
+    if (skipLabel) skipLabel.style.opacity = 0;
+    if (tint) tint.style.opacity = 0;
+
+    setTimeout(() => card.classList.remove('animating'), 360);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  ACTION HANDLERS (called by swipe AND by buttons)
+  // ─────────────────────────────────────────────────────────────
+
+  function handleRequest(cardId) {
+    const handyman = deck.find(h => h.id == cardId) || handymen.find(h => h.id == cardId);
+    deck = deck.filter(h => h.id != cardId);
+    requestedCount++;
+    const name = handyman ? handyman.name.split(' ')[0] : 'Handyman';
+    showToast(`✅ Request sent to ${name}!`, 'request');
+  }
+
+  function handleSkip(cardId) {
+    const handyman = deck.find(h => h.id == cardId) || handymen.find(h => h.id == cardId);
+    deck = deck.filter(h => h.id != cardId);
+    const name = handyman ? handyman.name.split(' ')[0] : 'Handyman';
+    showToast(`⏭ Skipped ${name}`, 'skip');
+  }
+
+  function handleSave(cardId) {
+    const handyman = deck.find(h => h.id == cardId) || handymen.find(h => h.id == cardId);
+    deck = deck.filter(h => h.id != cardId);
+    savedCount++;
+    const name = handyman ? handyman.name.split(' ')[0] : 'Handyman';
+    showToast(`⭐ ${name} saved for later`, 'save');
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  BUTTON TRIGGERS (call flyOut programmatically)
+  // ─────────────────────────────────────────────────────────────
+
+  function triggerSkip() {
+    if (!activeCard || isDragging) return;
+    currentX = 0;
+    currentY = 0;
+    flyOut('left');
+  }
+
+  function triggerRequest() {
+    if (!activeCard || isDragging) return;
+    currentX = 0;
+    currentY = 0;
+    flyOut('right');
+  }
+
+  function triggerSave() {
+    if (!activeCard || isDragging) return;
+    const cardId = activeCard.dataset.id;
+    const card = activeCard;
+    activeCard = null;
+
+    // Animate: float upward and fade
+    card.classList.add('animating');
+    card.style.transform = 'translateY(-120px) scale(0.85)';
+    card.style.opacity = '0';
+
+    handleSave(cardId);
+
+    setTimeout(() => {
+      card.remove();
+      renderDeck();
+    }, 380);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  TOAST NOTIFICATION
+  // ─────────────────────────────────────────────────────────────
+
+  let toastTimeout;
+
+  /**
+   * Shows a temporary toast notification.
+   * @param {string} message - Text to display
+   * @param {'request'|'skip'|'save'} type - Visual style
+   */
+  function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    // Clear existing timeout
+    clearTimeout(toastTimeout);
+    toast.classList.remove('show', 'request-toast', 'skip-toast', 'save-toast');
+
+    toast.textContent = message;
+    toast.classList.add(`${type}-toast`);
+
+    // Force reflow for animation restart
+    void toast.offsetWidth;
+    toast.classList.add('show');
+
+    toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  NAVIGATION
+  // ─────────────────────────────────────────────────────────────
+
+  function setNav(el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+
+    // For demo purposes, show a toast for non-home tabs
+    const label = el.querySelector('.nav-label').textContent;
+    if (label !== 'Home') {
+      showToast(`${label} — coming soon!`, 'save');
       setTimeout(() => {
-        el.style.display = 'none';
-        onComplete && onComplete();
-      }, 420);
-    }
-
-    // ── DRAG / SWIPE LOGIC ──
-    function attachDrag(card) {
-      if (!card) return;
-      // Remove previous listeners to avoid stacking
-      card.removeEventListener('mousedown', onDragStart);
-      card.removeEventListener('touchstart', onDragStart);
-      card.addEventListener('mousedown', onDragStart, { passive: false });
-      card.addEventListener('touchstart', onDragStart, { passive: false });
-    }
-
-    function onDragStart(e) {
-      // Only respond if dragReady (not in the brief cleanup window)
-      if (!dragReady) return;
-      if (cardOrder.length === 0) return;
-
-      currentCard = getTopCardEl();
-      if (!currentCard) return;
-
-      isDragging = true;
-      const point = e.touches ? e.touches[0] : e;
-      startX = point.clientX;
-      startY = point.clientY;
-      currentX = 0;
-
-      currentCard.style.transition = 'none';
-      currentCard.style.willChange = 'transform';
-
-      document.addEventListener('mousemove', onDragMove, { passive: false });
-      document.addEventListener('mouseup', onDragEnd);
-      document.addEventListener('touchmove', onDragMove, { passive: false });
-      document.addEventListener('touchend', onDragEnd);
-
-      e.preventDefault();
-    }
-
-    function onDragMove(e) {
-      if (!isDragging || !currentCard) return;
-      const point = e.touches ? e.touches[0] : e;
-      currentX = point.clientX - startX;
-      const currentY = point.clientY - startY;
-      const rotation = currentX * 0.08;
-
-      if (animationFrame) cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(() => {
-        if (!currentCard) return;
-        currentCard.style.transform = `translateX(${currentX}px) translateY(${currentY * 0.3}px) rotate(${rotation}deg)`;
-
-        // Show decision overlay based on drag direction
-        const skipOv = currentCard.querySelector('.skip-overlay');
-        const reqOv = currentCard.querySelector('.request-overlay');
-        const threshold = 40;
-
-        if (currentX < -threshold) {
-          skipOv.style.opacity = Math.min(1, Math.abs(currentX) / 120);
-          reqOv.style.opacity = 0;
-        } else if (currentX > threshold) {
-          reqOv.style.opacity = Math.min(1, currentX / 120);
-          skipOv.style.opacity = 0;
-        } else {
-          skipOv.style.opacity = 0;
-          reqOv.style.opacity = 0;
-        }
-      });
-
-      e.preventDefault();
-    }
-
-    function onDragEnd(e) {
-      if (!isDragging) return;
-      isDragging = false;
-
-      document.removeEventListener('mousemove', onDragMove);
-      document.removeEventListener('mouseup', onDragEnd);
-      document.removeEventListener('touchmove', onDragMove);
-      document.removeEventListener('touchend', onDragEnd);
-
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-
-      const card = currentCard;
-      currentCard = null;
-
-      // Set dragReady=false to prevent new drags during the transition window.
-      // Re-enable AFTER the card dismissal animation completes (420ms),
-      // not after an arbitrary short delay — this closes the 50ms race window.
-      dragReady = false;
-
-      if (!card) {
-        dragReady = true;
-        return;
-      }
-
-      const SWIPE_THRESHOLD = 80;
-
-      // Hide overlays
-      card.querySelectorAll('.decision-overlay').forEach(o => o.style.opacity = 0);
-
-      if (currentX > SWIPE_THRESHOLD) {
-        // Swiped right → request
-        triggerRequest(card);
-      } else if (currentX < -SWIPE_THRESHOLD) {
-        // Swiped left → skip
-        triggerSkip(card);
-      } else {
-        // Snap back
-        card.style.transition = 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1)';
-        card.style.transform = '';
-        dragReady = true; // ready immediately on snap-back
-      }
-    }
-
-    // ── ACTION HANDLERS ──
-
-    function triggerSkip(cardEl) {
-      const name = cardOrder[0] !== undefined ? getCardName(cardOrder[0]) : 'Pro';
-      dismissCard('left', () => {
-        reorderStack();
-        dragReady = true;
-      });
-
-      // Skip toast — uses dedicated #skip-toast element, no style mutation
-      if (skipToastTimer) clearTimeout(skipToastTimer);
-      skipToastEl.textContent = 'Skipped';
-      skipToastEl.classList.add('show');
-      skipToastTimer = setTimeout(() => {
-        skipToastEl.classList.remove('show');
-        skipToastTimer = null;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
       }, 1500);
     }
+  }
 
-    function triggerRequest(cardEl) {
-      const nameIdx = cardOrder[0];
-      const name = nameIdx !== undefined ? getCardName(nameIdx) : 'This pro';
-      dismissCard('right', () => {
-        reorderStack();
-        dragReady = true;
-      });
+  // ─────────────────────────────────────────────────────────────
+  //  RESET / RELOAD DECK
+  // ─────────────────────────────────────────────────────────────
 
-      // Show success overlay
-      successSub.textContent = `${name} will respond shortly`;
-      requestSuccess.classList.add('show');
-      setTimeout(() => requestSuccess.classList.remove('show'), 2000);
-    }
+  function resetDeck() {
+    deck = [...handymen];
+    requestedCount = 0;
+    savedCount = 0;
+    renderDeck();
+    showToast('🎉 Fresh batch loaded!', 'request');
+  }
 
-    function triggerSave() {
-      if (cardOrder.length === 0) return;
-      const name = getCardName(cardOrder[0]);
+  // ─────────────────────────────────────────────────────────────
+  //  KEYBOARD SUPPORT (for desktop testing)
+  // ─────────────────────────────────────────────────────────────
 
-      // Save toast — uses dedicated #save-toast element (separate from skip-toast)
-      // No style mutation of skip-toast, so no race condition is possible.
-      if (saveToastTimer) clearTimeout(saveToastTimer);
-      saveToastEl.textContent = `⭐ ${name} Saved!`;
-      saveToastEl.classList.add('show');
-      saveToastTimer = setTimeout(() => {
-        saveToastEl.classList.remove('show');
-        saveToastTimer = null;
-      }, 1500);
-    }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  triggerSkip();
+    if (e.key === 'ArrowRight') triggerRequest();
+    if (e.key === 'ArrowUp')    triggerSave();
+  });
 
-    // Button click handlers
-    function handleSkip() {
-      if (cardOrder.length === 0 || !dragReady) return;
-      dragReady = false;
-      const card = getTopCardEl();
-      if (!card) { dragReady = true; return; }
-      currentX = -90; // simulate left swipe
-      triggerSkip(card);
-    }
+  // ─────────────────────────────────────────────────────────────
+  //  INITIALIZATION
+  // ─────────────────────────────────────────────────────────────
+  renderDeck();
 
-    function handleRequest() {
-      if (cardOrder.length === 0 || !dragReady) return;
-      dragReady = false;
-      const card = getTopCardEl();
-      if (!card) { dragReady = true; return; }
-      currentX = 90; // simulate right swipe
-      triggerRequest(card);
-    }
+</script>
 
-    function handleSave() {
-      if (cardOrder.length === 0) return;
-      triggerSave();
-    }
-
-    // ── INIT ──
-    // Attach drag to the initial top card
-    reorderStack();
-
-    // Hide swipe hint after first interaction
-    let hintHidden = false;
-    document.addEventListener('mousedown', () => {
-      if (!hintHidden) {
-        hintHidden = true;
-        swipeHint.style.opacity = '0';
-        setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
-      }
-    }, { once: true });
-    document.addEventListener('touchstart', () => {
-      if (!hintHidden) {
-        hintHidden = true;
-        swipeHint.style.opacity = '0';
-        setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
-      }
-    }, { once: true });
-  </script>
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{COMPANY_NAME}}",
+  "description": "{{COMPANY_VISION}}",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web, iOS, Android",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
 
 </body>
 </html>
