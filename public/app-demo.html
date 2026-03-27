@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{COMPANY_NAME}} — Swipe to Find Your Handyman</title>
-  <meta name="description" content="Try the {{COMPANY_NAME}} app demo — swipe right to request a pre-vetted handyman, left to skip. Find local handymen for any home repair job instantly." />
-  <meta property="og:title" content="{{COMPANY_NAME}} — Swipe to Find Your Handyman" />
+  <title>Pikkemand – Swipe to Find Your Handyman</title>
+  <meta name="description" content="Try the Pikkemand app demo — swipe right to request a pre-vetted handyman, left to skip. Find local handymen for any home repair job instantly." />
+  <meta property="og:title" content="Pikkemand – Swipe to Find Your Handyman" />
   <meta property="og:description" content="The Tinder-style marketplace for home repairs. Post a job, swipe through vetted handymen, book instantly." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://{{COMPANY_DOMAIN}}/app-demo" />
+  <meta property="og:url" content="https://pikkemand-pikkemand-pikkemand.speederai.app/app-demo" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -18,16 +18,26 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "{{COMPANY_NAME}}",
-    "description": "{{COMPANY_VISION}}",
+    "name": "Pikkemand",
+    "description": "Pikkemand is a mobile-first marketplace connecting homeowners with pre-vetted, rated handymen through a Tinder-style swiping interface for quick job matching.",
     "applicationCategory": "HomeAndGarden",
     "operatingSystem": "Web",
-    "url": "https://{{COMPANY_DOMAIN}}/app-demo",
+    "url": "https://pikkemand-pikkemand-pikkemand.speederai.app/app-demo",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD",
       "description": "Free to post jobs and swipe handymen"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Pikkemand",
+      "url": "https://pikkemand-pikkemand-pikkemand.speederai.app",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@pikkemand-pikkemand-pikkemand.speederai.app",
+        "contactType": "customer support"
+      }
     }
   }
   </script>
@@ -65,506 +75,474 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 20px 16px 40px;
       overflow-x: hidden;
     }
 
-    /* Ambient background blobs */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -100px;
-      right: -100px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      bottom: -150px;
-      left: -100px;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
+    /* ── PAGE HEADER ── */
+    .page-header {
+      width: 100%;
+      max-width: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 16px;
     }
 
-    /* ─── PAGE HEADER (above phone) ─── */
-    .page-header {
-      text-align: center;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 10;
-    }
-    .page-header .badge {
-      display: inline-flex;
+    .page-logo {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(245,158,11,0.15);
-      border: 1px solid rgba(245,158,11,0.3);
-      color: var(--amber-light);
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .page-logo-mark {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .page-logo-text {
       font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .demo-badge {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--amber-light);
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 100px;
-      margin-bottom: 14px;
-    }
-    .page-header .badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--amber);
-      border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
-    }
-    .page-header h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(26px, 6vw, 40px);
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-    .page-header h1 span {
-      background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .page-header p {
-      font-size: 15px;
-      color: rgba(255,255,255,0.55);
-      max-width: 320px;
-      margin: 0 auto;
-      line-height: 1.6;
     }
 
-    /* ─── PHONE FRAME ─── */
+    /* ── PHONE FRAME ── */
     .phone-frame {
-      position: relative;
       width: 100%;
       max-width: 390px;
-      background: #0D1117;
+      background: #0A0F1A;
       border-radius: 44px;
-      padding: 14px;
+      padding: 14px 12px;
       box-shadow:
-        0 0 0 1px rgba(255,255,255,0.08),
-        0 40px 100px rgba(0,0,0,0.6),
+        0 0 0 2px rgba(255,255,255,0.08),
+        0 30px 80px rgba(0,0,0,0.6),
+        0 60px 120px rgba(0,0,0,0.4),
         0 0 60px rgba(245,158,11,0.08);
-      z-index: 10;
+      position: relative;
     }
+
+    /* Phone notch */
     .phone-frame::before {
       content: '';
       position: absolute;
-      top: 22px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 28px;
-      background: #0D1117;
-      border-radius: 0 0 20px 20px;
-      z-index: 20;
-    }
-    /* Dynamic island */
-    .phone-frame::after {
-      content: '';
-      position: absolute;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 22px;
-      background: #000;
-      border-radius: 100px;
-      z-index: 21;
+      width: 120px;
+      height: 6px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 3px;
+      z-index: 10;
     }
 
-    /* ─── APP SCREEN ─── */
     .app-screen {
       background: var(--bg);
-      border-radius: 32px;
-      height: 780px;
+      border-radius: 34px;
       overflow: hidden;
-      position: relative;
+      height: 760px;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
-    /* ─── STATUS BAR ─── */
+    /* ── STATUS BAR ── */
     .status-bar {
       background: var(--white);
-      padding: 44px 24px 0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px 6px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--navy);
+      color: var(--text);
       flex-shrink: 0;
     }
-    .status-time { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; }
-    .status-icons { display: flex; align-items: center; gap: 5px; }
-    .status-icons svg { width: 14px; height: 14px; }
 
-    /* ─── TOP BAR ─── */
+    .status-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    /* ── TOP BAR ── */
     .top-bar {
       background: var(--white);
-      padding: 10px 20px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+      padding: 10px 18px 14px;
+      border-bottom: 1px solid var(--gray-light);
       flex-shrink: 0;
     }
-    .top-bar-back {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .top-bar-info { flex: 1; min-width: 0; }
+
     .top-bar-label {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--amber);
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      margin-bottom: 6px;
     }
-    .top-bar-label::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      background: var(--amber);
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .top-bar-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--navy);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .top-bar-filter {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: var(--amber);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      cursor: pointer;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(245,158,11,0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .top-bar-filter:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(245,158,11,0.45); }
-    .top-bar-filter:active { transform: scale(0.95); }
 
-    /* ─── MATCH COUNT BAR ─── */
-    .match-bar {
-      padding: 8px 20px;
+    .top-bar-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
-    }
-    .match-count {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    .match-count strong {
-      color: var(--navy);
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-    }
-    .match-distance {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
-      background: var(--white);
-      padding: 4px 10px;
-      border-radius: 100px;
-      border: 1px solid var(--gray-light);
     }
 
-    /* ─── CARD STACK AREA ─── */
+    .job-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .job-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .job-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--amber-pale);
+      color: var(--amber-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .filter-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .filter-btn:hover { background: var(--navy-light); }
+
+    /* ── CARD STACK AREA ── */
     .card-area {
       flex: 1;
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px 16px 0;
       overflow: hidden;
+      padding: 16px 16px 4px;
     }
 
-    /* ─── SWIPE INDICATORS ─── */
-    .swipe-hint-left,
-    .swipe-hint-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: 3px solid;
-      opacity: 0;
-      transition: opacity 0.1s ease;
-      z-index: 100;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .swipe-hint-left {
-      left: 20px;
-      color: var(--red);
-      border-color: var(--red);
-      background: rgba(239,68,68,0.08);
-      transform: translateY(-50%) rotate(-15deg);
-    }
-    .swipe-hint-right {
-      right: 20px;
-      color: var(--green);
-      border-color: var(--green);
-      background: rgba(34,197,94,0.08);
-      transform: translateY(-50%) rotate(15deg);
+    .card-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
-    /* ─── HANDYMAN CARD ─── */
-    .card {
+    /* ── HANDYMAN CARD ── */
+    .handyman-card {
       position: absolute;
-      width: calc(100% - 16px);
+      top: 0;
+      left: 0;
+      right: 0;
       background: var(--white);
-      border-radius: 24px;
+      border-radius: 20px;
       box-shadow: var(--shadow-card);
+      overflow: hidden;
       cursor: grab;
       user-select: none;
       touch-action: none;
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.2s;
       will-change: transform;
-      overflow: hidden;
-    }
-    .card:active { cursor: grabbing; }
-    .card.is-dragging { transition: none; box-shadow: var(--shadow-card-hover); }
-    .card.animate-out-left {
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.4s ease;
-      transform: translateX(-120%) rotate(-20deg) !important;
-      opacity: 0;
-    }
-    .card.animate-out-right {
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.4s ease;
-      transform: translateX(120%) rotate(20deg) !important;
-      opacity: 0;
-    }
-    .card.animate-out-up {
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.4s ease;
-      transform: translateY(-120%) !important;
-      opacity: 0;
     }
 
-    /* Card stack layers */
-    .card:nth-child(1) { z-index: 5; transform: translateY(0) scale(1); }
-    .card:nth-child(2) { z-index: 4; transform: translateY(10px) scale(0.96); }
-    .card:nth-child(3) { z-index: 3; transform: translateY(20px) scale(0.92); }
-    .card:nth-child(4) { z-index: 2; transform: translateY(28px) scale(0.88); opacity: 0.7; }
+    .handyman-card:active { cursor: grabbing; }
+    .handyman-card.top-card { z-index: 10; }
+    .handyman-card.second-card { z-index: 9; transform: scale(0.96) translateY(12px); }
+    .handyman-card.third-card { z-index: 8; transform: scale(0.92) translateY(24px); }
 
-    /* ─── CARD PHOTO AREA ─── */
-    .card-photo {
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .card-avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Drag decision overlays */
+    .decision-overlay {
+      position: absolute;
+      top: 20px;
+      padding: 8px 16px;
+      border-radius: 10px;
       font-family: 'Poppins', sans-serif;
-      font-size: 32px;
+      font-size: 22px;
       font-weight: 800;
-      color: white;
-      flex-shrink: 0;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      border: 3px solid rgba(255,255,255,0.3);
-    }
-    .card-photo-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 60px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.06));
+      letter-spacing: 0.02em;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+      border: 3px solid;
+      transform: rotate(-15deg);
+      transition: opacity 0.1s;
     }
 
-    /* Verified badge */
-    .card-verified {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
-      border-radius: 100px;
-      padding: 4px 10px 4px 6px;
+    .skip-overlay {
+      right: 20px;
+      color: var(--red);
+      border-color: var(--red);
+      background: rgba(239,68,68,0.08);
+      transform: rotate(15deg);
+    }
+
+    .request-overlay {
+      left: 20px;
+      color: var(--green);
+      border-color: var(--green);
+      background: rgba(34,197,94,0.08);
+      transform: rotate(-15deg);
+    }
+
+    /* Card header with avatar */
+    .card-header {
+      padding: 18px 18px 14px;
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #15803D;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      gap: 14px;
     }
-    .card-verified-icon {
-      width: 16px;
-      height: 16px;
-      background: #22C55E;
-      border-radius: 50%;
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    /* Response time badge */
-    .card-response {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
-      border-radius: 100px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--navy);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    /* ─── CARD BODY ─── */
-    .card-body { padding: 14px 18px 18px; }
-
-    .card-header-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .card-name {
       font-family: 'Poppins', sans-serif;
       font-size: 20px;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      font-weight: 800;
+      color: var(--white);
+      flex-shrink: 0;
+      position: relative;
     }
+
+    .availability-dot {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+    }
+
+    .availability-dot.online { background: var(--green); }
+    .availability-dot.soon { background: var(--amber); }
+
+    .card-info { flex: 1; }
+
+    .card-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .stars { color: var(--amber); font-size: 13px; }
+    .rating-num { font-size: 13px; font-weight: 600; color: var(--text); }
+    .rating-count { font-size: 12px; color: var(--text-muted); }
+
     .card-rate {
       font-family: 'Poppins', sans-serif;
       font-size: 18px;
       font-weight: 800;
       color: var(--amber-dark);
-      white-space: nowrap;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
     }
-    .card-rate span { font-size: 12px; font-weight: 500; color: var(--text-muted); }
 
-    .card-meta {
+    /* Verified + response row */
+    .card-meta-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 18px 10px;
     }
-    .card-rating {
-      display: flex;
+
+    .verified-badge {
+      display: inline-flex;
       align-items: center;
-      gap: 3px;
-      font-size: 13px;
+      gap: 4px;
+      background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+      color: #1D4ED8;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--navy);
+      padding: 4px 9px;
+      border-radius: 6px;
     }
-    .stars { color: var(--amber); font-size: 13px; letter-spacing: 1px; }
-    .card-jobs {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
+
+    .response-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+      color: #15803D;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
     }
-    .card-distance {
-      display: flex;
+
+    .distance-badge {
+      margin-left: auto;
+      display: inline-flex;
       align-items: center;
       gap: 3px;
+      color: var(--text-muted);
       font-size: 12px;
-      color: var(--text-muted);
       font-weight: 500;
-      margin-left: auto;
     }
 
+    /* Divider */
+    .card-divider {
+      height: 1px;
+      background: var(--gray-light);
+      margin: 0 18px 12px;
+    }
+
+    /* Bio */
     .card-bio {
-      font-size: 13px;
-      color: var(--text-muted);
+      padding: 0 18px 14px;
+      font-size: 13.5px;
       line-height: 1.55;
-      margin-bottom: 12px;
+      color: var(--text-muted);
     }
 
-    .card-specialties {
+    /* Tags */
+    .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-    }
-    .specialty-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 100px;
-      background: var(--amber-pale);
-      color: var(--amber-dark);
-      border: 1px solid rgba(245,158,11,0.2);
-      white-space: nowrap;
-    }
-    .specialty-tag.match {
-      background: #ECFDF5;
-      color: #15803D;
-      border-color: rgba(34,197,94,0.25);
+      padding: 0 18px 16px;
     }
 
-    /* ─── ACTION BUTTONS ─── */
+    .tag {
+      background: var(--bg);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-light);
+    }
+
+    /* Stats row at bottom of card */
+    .card-stats {
+      background: linear-gradient(to right, #FFFBEB, #FEF3C7);
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #FDE68A;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .stat-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--amber-dark);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .empty-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+    }
+
+    .empty-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .empty-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .empty-cta {
+      background: var(--amber);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* ── ACTION BUTTONS ── */
     .action-bar {
-      padding: 12px 20px 16px;
+      padding: 12px 20px 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -573,996 +551,931 @@
       border-top: 1px solid var(--gray-light);
       flex-shrink: 0;
     }
+
     .action-btn {
       border: none;
-      border-radius: 50%;
       cursor: pointer;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
       flex-shrink: 0;
     }
-    .action-btn:active { transform: scale(0.9) !important; }
+
+    .action-btn:hover { transform: scale(1.1); }
+    .action-btn:active { transform: scale(0.95); }
 
     .btn-skip {
       width: 56px;
       height: 56px;
       background: var(--white);
-      box-shadow: 0 4px 16px rgba(239,68,68,0.2), 0 0 0 2px rgba(239,68,68,0.15);
+      border: 2px solid var(--red);
+      color: var(--red);
+      font-size: 22px;
+      box-shadow: 0 4px 16px rgba(239,68,68,0.15);
     }
-    .btn-skip:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 24px rgba(239,68,68,0.3), 0 0 0 2px rgba(239,68,68,0.25); }
 
-    .btn-save {
-      width: 48px;
-      height: 48px;
-      background: var(--white);
-      box-shadow: 0 4px 16px rgba(59,130,246,0.2), 0 0 0 2px rgba(59,130,246,0.15);
-    }
-    .btn-save:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.3), 0 0 0 2px rgba(59,130,246,0.25); }
+    .btn-skip:hover { box-shadow: 0 6px 20px rgba(239,68,68,0.25); }
 
     .btn-request {
-      width: 72px;
-      height: 72px;
+      width: 68px;
+      height: 68px;
       background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dark) 100%);
-      box-shadow: 0 8px 24px rgba(245,158,11,0.45);
+      color: var(--white);
+      font-size: 26px;
+      box-shadow: var(--shadow-amber);
     }
-    .btn-request:hover { transform: scale(1.08) translateY(-3px); box-shadow: 0 12px 32px rgba(245,158,11,0.55); }
 
-    .action-btn-label {
-      position: absolute;
-      bottom: -18px;
-      left: 50%;
-      transform: translateX(-50%);
+    .btn-request:hover { box-shadow: 0 12px 40px rgba(245,158,11,0.35); }
+
+    .btn-save {
+      width: 56px;
+      height: 56px;
+      background: var(--white);
+      border: 2px solid var(--blue);
+      color: var(--blue);
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(59,130,246,0.15);
+    }
+
+    .btn-save:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.25); }
+
+    .action-label {
       font-size: 10px;
       font-weight: 600;
       color: var(--text-muted);
-      white-space: nowrap;
-      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* ─── BOTTOM NAV ─── */
-    .bottom-nav {
-      background: var(--white);
-      padding: 12px 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      border-top: 1px solid var(--gray-light);
-      flex-shrink: 0;
-    }
-    .nav-item {
+    .action-col {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      cursor: pointer;
-      padding: 4px 12px;
-      border-radius: 12px;
-      transition: background 0.15s ease;
-      position: relative;
-      border: none;
-      background: transparent;
-    }
-    .nav-item:hover { background: var(--bg); }
-    .nav-item.active .nav-icon { color: var(--amber); }
-    .nav-item.active .nav-label { color: var(--amber); font-weight: 600; }
-    .nav-icon { color: var(--gray); transition: color 0.15s ease; }
-    .nav-label { font-size: 10px; color: var(--text-muted); font-weight: 500; transition: color 0.15s ease; }
-    .nav-badge {
-      position: absolute;
-      top: 2px;
-      right: 10px;
-      width: 8px;
-      height: 8px;
-      background: var(--red);
-      border-radius: 50%;
-      border: 2px solid var(--white);
     }
 
-    /* ─── EMPTY STATE ─── */
-    .empty-state {
-      display: none;
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      background: var(--white);
+      border-top: 1px solid var(--gray-light);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 6px 0 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-item {
+      display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding: 32px;
-      text-align: center;
-    }
-    .empty-icon {
-      width: 80px;
-      height: 80px;
-      background: var(--amber-pale);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 36px;
-    }
-    .empty-state h3 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-    .empty-state p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
-    .empty-refresh-btn {
-      background: var(--amber);
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 100px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
+      gap: 3px;
       cursor: pointer;
-      box-shadow: var(--shadow-amber);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 4px 0;
+      transition: color 0.15s;
     }
-    .empty-refresh-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(245,158,11,0.45); }
 
-    /* ─── REQUEST SENT ANIMATION ─── */
-    .request-toast {
+    .nav-item .nav-icon { font-size: 20px; }
+    .nav-item .nav-label { font-size: 10px; font-weight: 600; color: var(--gray); letter-spacing: 0.03em; }
+    .nav-item.active .nav-label { color: var(--amber-dark); }
+    .nav-item.active .nav-icon { filter: none; }
+
+    /* ── TOAST NOTIFICATIONS ── */
+    .toast {
       position: absolute;
-      top: 50%;
+      bottom: 140px;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
-      color: white;
-      padding: 20px 32px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 16px 40px rgba(34,197,94,0.4);
-      min-width: 200px;
-    }
-    .request-toast.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .request-toast .toast-icon { font-size: 40px; margin-bottom: 8px; }
-    .request-toast .toast-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-    .request-toast .toast-sub { font-size: 13px; opacity: 0.9; }
-
-    /* Skip toast */
-    .skip-toast {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-      color: white;
-      padding: 16px 28px;
-      border-radius: 20px;
-      text-align: center;
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 16px 40px rgba(239,68,68,0.35);
-      min-width: 160px;
-    }
-    .skip-toast.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .skip-toast .toast-title { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700; }
-
-    /* ─── PAGE FOOTER (below phone) ─── */
-    .page-footer {
-      margin-top: 28px;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-    .page-footer p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 16px;
-    }
-    .page-footer .cta-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .footer-btn-primary {
-      background: var(--amber);
-      color: #1E293B;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 12px 28px;
-      border-radius: 100px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(245,158,11,0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .footer-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(245,158,11,0.55); }
-    .footer-btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.7);
+      transform: translateX(-50%) translateY(20px);
+      padding: 10px 20px;
+      border-radius: 50px;
       font-family: 'Poppins', sans-serif;
       font-size: 14px;
       font-weight: 600;
-      padding: 12px 24px;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.12);
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
+      color: var(--white);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
     }
-    .footer-btn-secondary:hover { background: rgba(255,255,255,0.14); color: #fff; }
 
-    /* ─── SWIPE INSTRUCTION HINT ─── */
-    .swipe-instructions {
-      margin-top: 16px;
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Skip toast - red */
+    #skip-toast {
+      background: linear-gradient(135deg, #EF4444, #DC2626);
+    }
+
+    /* Save toast - blue (separate element, no style mutation needed) */
+    #save-toast {
+      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    }
+
+    /* Request success overlay */
+    .request-success {
+      position: absolute;
+      inset: 0;
+      background: rgba(34,197,94,0.92);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      border-radius: 34px;
     }
-    .swipe-tip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
+
+    .request-success.show { opacity: 1; pointer-events: all; }
+
+    .success-icon {
+      font-size: 72px;
+      margin-bottom: 16px;
+      animation: bounceIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .success-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .success-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    @keyframes bounceIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── PAGE FOOTER (below phone) ── */
+    .page-footer {
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+      margin-top: 24px;
+      padding: 0 16px;
+    }
+
+    .footer-text {
+      font-size: 13px;
       color: rgba(255,255,255,0.45);
+      margin-bottom: 10px;
+      line-height: 1.5;
     }
-    .swipe-tip-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
+
+    .footer-links {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-    }
-    .swipe-tip-icon.red { background: rgba(239,68,68,0.15); color: #EF4444; }
-    .swipe-tip-icon.green { background: rgba(34,197,94,0.15); color: #22C55E; }
-    .swipe-tip-icon.blue { background: rgba(59,130,246,0.15); color: #3B82F6; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 480px) {
-      body { padding: 16px 8px 32px; }
-      .phone-frame { border-radius: 36px; padding: 10px; }
-      .app-screen { border-radius: 28px; height: 720px; }
-      .page-header h1 { font-size: 26px; }
-    }
-    @media (min-width: 768px) {
-      body { padding: 40px 24px 60px; }
-      .page-header h1 { font-size: 44px; }
+      gap: 16px;
     }
 
-    /* ─── ACCESSIBILITY ─── */
+    .footer-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--amber-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--amber); }
+
+    /* ── SWIPE HINT OVERLAY ── */
+    .swipe-hint {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .hint-chip {
+      background: rgba(0,0,0,0.55);
+      color: rgba(255,255,255,0.8);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      .phone-frame { border-radius: 32px; padding: 12px 8px; }
+      .app-screen { border-radius: 24px; height: 680px; }
+      body { padding: 12px 8px 32px; }
+    }
+
+    @media (min-width: 600px) {
+      body { padding: 40px 16px 60px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Hero entrance animation */
-    .page-header { animation: fadeInUp 0.7s ease-out both; }
-    .phone-frame { animation: fadeInUp 0.7s 0.15s ease-out both; }
-    .page-footer { animation: fadeInUp 0.7s 0.3s ease-out both; }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── PAGE HEADER ─── -->
-  <header class="page-header" role="banner">
-    <div class="badge">Live Product Demo</div>
-    <h1>Find Your <span>Handyman</span><br>in Seconds</h1>
-    <p>Swipe right to request · Swipe left to skip<br>Book the best in your neighborhood</p>
+  <!-- ── PAGE HEADER ── -->
+  <header class="page-header">
+    <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="page-logo">
+      <div class="page-logo-mark">🔧</div>
+      <span class="page-logo-text">Pikkemand</span>
+    </a>
+    <span class="demo-badge">Live Demo</span>
   </header>
 
-  <!-- ─── PHONE FRAME ─── -->
-  <main aria-label="{{COMPANY_NAME}} app demo">
-    <div class="phone-frame" role="application" aria-label="Swipe matching interface">
+  <!-- ── PHONE FRAME ── -->
+  <div class="phone-frame">
+    <div class="app-screen">
 
-      <div class="app-screen" id="app-screen">
-
-        <!-- Status Bar -->
-        <div class="status-bar" aria-hidden="true">
-          <span class="status-time">9:41</span>
-          <div class="status-icons">
-            <!-- Signal -->
-            <svg viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="0" y="6" width="2" height="4" rx="0.5" fill="#1E293B"/>
-              <rect x="3" y="4" width="2" height="6" rx="0.5" fill="#1E293B"/>
-              <rect x="6" y="2" width="2" height="8" rx="0.5" fill="#1E293B"/>
-              <rect x="9" y="0" width="2" height="10" rx="0.5" fill="#1E293B"/>
-              <rect x="12" y="0" width="2" height="10" rx="0.5" fill="#E2E8F0"/>
-            </svg>
-            <!-- WiFi -->
-            <svg viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M7 8.5L7 8.5" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
-              <path d="M4.5 6.5C5.08 5.9 5.98 5.5 7 5.5C8.02 5.5 8.92 5.9 9.5 6.5" stroke="#1E293B" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M2 4C3.2 2.75 5 2 7 2C9 2 10.8 2.75 12 4" stroke="#1E293B" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <!-- Battery -->
-            <svg viewBox="0 0 22 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="0.5" y="0.5" width="18" height="9" rx="2.5" stroke="#1E293B" stroke-width="1"/>
-              <rect x="19.5" y="3" width="2" height="4" rx="1" fill="#1E293B"/>
-              <rect x="2" y="2" width="13" height="6" rx="1.5" fill="#1E293B"/>
-            </svg>
-          </div>
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <span>▲▼</span>
+          <span>WiFi</span>
+          <span>🔋</span>
         </div>
+      </div>
 
-        <!-- Top Bar -->
-        <div class="top-bar">
-          <button class="top-bar-back" aria-label="Go back">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M10 4L6 8L10 12" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="top-bar-info">
-            <div class="top-bar-label">Active Job</div>
-            <div class="top-bar-title">Fix leaky kitchen faucet</div>
-          </div>
-          <button class="top-bar-filter" aria-label="Filter handymen">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M3 4.5H15M5.5 9H12.5M8 13.5H10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Match Count Bar -->
-        <div class="match-bar" aria-live="polite">
-          <div class="match-count" id="match-count-text"><strong>6</strong> handymen available</div>
-          <div class="match-distance">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true">
-              <path d="M5 0C2.79 0 1 1.79 1 4C1 6.76 5 11 5 11C5 11 9 6.76 9 4C9 2.79 8.08 1.52 6.96 0.83C6.37 0.46 5.7 0.27 5 0.27V0Z" fill="#94A3B8"/>
-              <circle cx="5" cy="4" r="1.5" fill="white"/>
-            </svg>
-            ≤ 5 km
-          </div>
-        </div>
-
-        <!-- Swipe Hints -->
-        <div class="swipe-hint-left" id="hint-left" aria-hidden="true">SKIP</div>
-        <div class="swipe-hint-right" id="hint-right" aria-hidden="true">REQUEST ✓</div>
-
-        <!-- Card Stack Area -->
-        <div class="card-area" id="card-area" role="region" aria-label="Handyman profiles">
-
-          <!-- CARD 6: Mati Sepp -->
-          <article class="card" data-name="Mati Sepp" aria-label="Mati Sepp - Plumber">
-            <div class="card-photo" style="background: linear-gradient(145deg, #DBEAFE 0%, #EFF6FF 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #2563EB, #1D4ED8);">MS</div>
-              <div class="card-response">⚡ Replies in 20 min</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
-              </div>
-              <div class="card-photo-overlay"></div>
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-label">Active Job</div>
+        <div class="top-bar-row">
+          <div>
+            <div class="job-title">Fix leaky kitchen faucet</div>
+            <div class="job-meta">
+              <span class="job-tag">6 handymen available</span>
+              <span class="job-tag">≤ 5 km</span>
             </div>
-            <div class="card-body">
-              <div class="card-header-row">
+          </div>
+          <button class="filter-btn" aria-label="Filter handymen">⚙</button>
+        </div>
+      </div>
+
+      <!-- Card Stack Area -->
+      <div class="card-area" id="card-area">
+        <div class="card-stack" id="card-stack">
+
+          <!-- Card 1: Mati Sepp -->
+          <div class="handyman-card top-card" id="card-0" data-name="Mati" data-index="0">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+                MS
+                <div class="availability-dot soon"></div>
+              </div>
+              <div class="card-info">
                 <div class="card-name">Mati Sepp</div>
-                <div class="card-rate">€85<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
                 <div class="card-rating">
                   <span class="stars">★★★★★</span>
-                  <span>4.9</span>
-                </div>
-                <div class="card-jobs">· 234 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  1.8 km
+                  <span class="rating-num">4.9</span>
+                  <span class="rating-count">· 234 jobs</span>
                 </div>
               </div>
-              <p class="card-bio">15 years in plumbing and pipe systems. Fast, clean work with a warranty. Tallinn native, know every building type in the city.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag match">🔧 Plumbing</span>
-                <span class="specialty-tag">🚿 Bathroom Fit</span>
-                <span class="specialty-tag">💧 Leak Repair</span>
-              </div>
+              <div class="card-rate">€85/hr</div>
             </div>
-          </article>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Replies in 20 min</span>
+              <span class="distance-badge">📍 1.8 km</span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              15 years in plumbing and pipe systems. Fast, clean work with a warranty.
+              Tallinn native, know every building type in the city.
+            </div>
+            <div class="card-tags">
+              <span class="tag">🔧 Plumbing</span>
+              <span class="tag">🚿 Bathroom Fit</span>
+              <span class="tag">💧 Leak Repair</span>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">234</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">15yr</span><span class="stat-label">Experience</span></div>
+            </div>
+          </div>
 
-          <!-- CARD 5: Kristjan Pärn -->
-          <article class="card" data-name="Kristjan Pärn" aria-label="Kristjan Pärn - Electrician">
-            <div class="card-photo" style="background: linear-gradient(145deg, #FEF3C7 0%, #FFFBEB 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #D97706, #B45309);">KP</div>
-              <div class="card-response">⚡ Replies in 1 hr</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
+          <!-- Card 2: Kristjan Pärn -->
+          <div class="handyman-card second-card" id="card-1" data-name="Kristjan" data-index="1">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">
+                KP
+                <div class="availability-dot soon"></div>
               </div>
-              <div class="card-photo-overlay"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-header-row">
+              <div class="card-info">
                 <div class="card-name">Kristjan Pärn</div>
-                <div class="card-rate">€95<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
                 <div class="card-rating">
                   <span class="stars">★★★★★</span>
-                  <span>4.8</span>
-                </div>
-                <div class="card-jobs">· 187 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  2.3 km
+                  <span class="rating-num">4.8</span>
+                  <span class="rating-count">· 187 jobs</span>
                 </div>
               </div>
-              <p class="card-bio">Licensed electrician with certification for residential & commercial. No shortcuts, no fire hazards — just professional work you can trust.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag">⚡ Electrical</span>
-                <span class="specialty-tag">🔌 Installations</span>
-                <span class="specialty-tag">🏠 Smart Home</span>
-              </div>
+              <div class="card-rate">€95/hr</div>
             </div>
-          </article>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Replies in 1 hr</span>
+              <span class="distance-badge">📍 2.3 km</span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              Licensed electrician with certification for residential &amp; commercial.
+              No shortcuts, no fire hazards — just professional work you can trust.
+            </div>
+            <div class="card-tags">
+              <span class="tag">⚡ Electrical</span>
+              <span class="tag">🔌 Installations</span>
+              <span class="tag">🏠 Smart Home</span>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">187</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">4.8★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">12yr</span><span class="stat-label">Experience</span></div>
+            </div>
+          </div>
 
-          <!-- CARD 4: Annika Tamm -->
-          <article class="card" data-name="Annika Tamm" aria-label="Annika Tamm - Painter">
-            <div class="card-photo" style="background: linear-gradient(145deg, #FCE7F3 0%, #FDF2F8 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #DB2777, #BE185D);">AT</div>
-              <div class="card-response">⚡ Replies in 30 min</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
+          <!-- Card 3: Annika Tamm -->
+          <div class="handyman-card third-card" id="card-2" data-name="Annika" data-index="2">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+                AT
+                <div class="availability-dot online"></div>
               </div>
-              <div class="card-photo-overlay"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-header-row">
+              <div class="card-info">
                 <div class="card-name">Annika Tamm</div>
-                <div class="card-rate">€70<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
                 <div class="card-rating">
                   <span class="stars">★★★★★</span>
-                  <span>5.0</span>
-                </div>
-                <div class="card-jobs">· 156 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  3.1 km
+                  <span class="rating-num">5.0</span>
+                  <span class="rating-count">· 156 jobs</span>
                 </div>
               </div>
-              <p class="card-bio">Interior & exterior painting with an eye for detail. I use eco-friendly paints and always leave your home cleaner than I found it.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag">🎨 Painting</span>
-                <span class="specialty-tag">🖌️ Wallpaper</span>
-                <span class="specialty-tag">✨ Finishing</span>
-              </div>
+              <div class="card-rate">€70/hr</div>
             </div>
-          </article>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Replies in 30 min</span>
+              <span class="distance-badge">📍 3.1 km</span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              Interior &amp; exterior painting with an eye for detail.
+              I use eco-friendly paints and always leave your home cleaner than I found it.
+            </div>
+            <div class="card-tags">
+              <span class="tag">🎨 Painting</span>
+              <span class="tag">🖌️ Wallpaper</span>
+              <span class="tag">✨ Finishing</span>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">156</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">5.0★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">8yr</span><span class="stat-label">Experience</span></div>
+            </div>
+          </div>
 
-          <!-- CARD 3: Toomas Kask -->
-          <article class="card" data-name="Toomas Kask" aria-label="Toomas Kask - Carpenter">
-            <div class="card-photo" style="background: linear-gradient(145deg, #D1FAE5 0%, #ECFDF5 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #059669, #047857);">TK</div>
-              <div class="card-response">⚡ Available now</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
+          <!-- Card 4: Toomas Kask -->
+          <div class="handyman-card" id="card-3" data-name="Toomas" data-index="3" style="z-index:7; transform: scale(0.88) translateY(36px);">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #10B981, #059669);">
+                TK
+                <div class="availability-dot online"></div>
               </div>
-              <div class="card-photo-overlay"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-header-row">
+              <div class="card-info">
                 <div class="card-name">Toomas Kask</div>
-                <div class="card-rate">€80<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
                 <div class="card-rating">
                   <span class="stars">★★★★☆</span>
-                  <span>4.7</span>
-                </div>
-                <div class="card-jobs">· 312 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  4.5 km
+                  <span class="rating-num">4.7</span>
+                  <span class="rating-count">· 312 jobs</span>
                 </div>
               </div>
-              <p class="card-bio">Furniture assembly, shelving, doors, and custom woodwork. If it's made of wood, I can build or fix it. Same-day slots available this week.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag">🪵 Carpentry</span>
-                <span class="specialty-tag">📦 Assembly</span>
-                <span class="specialty-tag">🚪 Doors & Locks</span>
-              </div>
+              <div class="card-rate">€80/hr</div>
             </div>
-          </article>
-
-          <!-- CARD 2: Peeter Lõhmus -->
-          <article class="card" data-name="Peeter Lõhmus" aria-label="Peeter Lõhmus - General Repairs">
-            <div class="card-photo" style="background: linear-gradient(145deg, #EDE9FE 0%, #F5F3FF 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #7C3AED, #6D28D9);">PL</div>
-              <div class="card-response">⚡ Replies in 45 min</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
-              </div>
-              <div class="card-photo-overlay"></div>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Available now</span>
+              <span class="distance-badge">📍 4.5 km</span>
             </div>
-            <div class="card-body">
-              <div class="card-header-row">
-                <div class="card-name">Peeter Lõhmus</div>
-                <div class="card-rate">€65<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span>4.9</span>
-                </div>
-                <div class="card-jobs">· 89 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  1.2 km
-                </div>
-              </div>
-              <p class="card-bio">Your go-to guy for everything around the house. Plumbing, drywall, tiling, assembly — jack of all trades, master of customer satisfaction.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag">🔨 General</span>
-                <span class="specialty-tag">🪟 Tiling</span>
-                <span class="specialty-tag">🧱 Drywall</span>
-              </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              Furniture assembly, shelving, doors, and custom woodwork.
+              If it's made of wood, I can build or fix it. Same-day slots available this week.
             </div>
-          </article>
-
-          <!-- CARD 1 (TOP): Jüri Rebane -->
-          <article class="card" data-name="Jüri Rebane" aria-label="Jüri Rebane - Plumber & General Repairs">
-            <div class="card-photo" style="background: linear-gradient(145deg, #FEF9C3 0%, #FEFCE8 100%);">
-              <div class="card-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">JR</div>
-              <div class="card-response">⚡ Available now</div>
-              <div class="card-verified">
-                <div class="card-verified-icon">
-                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                Verified Pro
-              </div>
-              <div class="card-photo-overlay"></div>
+            <div class="card-tags">
+              <span class="tag">🪵 Carpentry</span>
+              <span class="tag">📦 Assembly</span>
+              <span class="tag">🚪 Doors &amp; Locks</span>
             </div>
-            <div class="card-body">
-              <div class="card-header-row">
-                <div class="card-name">Jüri Rebane</div>
-                <div class="card-rate">€75<span>/hr</span></div>
-              </div>
-              <div class="card-meta">
-                <div class="card-rating">
-                  <span class="stars">★★★★★</span>
-                  <span>4.9</span>
-                </div>
-                <div class="card-jobs">· 421 jobs</div>
-                <div class="card-distance">
-                  <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 0C2.34 0 1 1.34 1 3C1 5.07 4 9 4 9C4 9 7 5.07 7 3C7 1.34 5.66 0 4 0Z" fill="#94A3B8"/><circle cx="4" cy="3" r="1" fill="white"/></svg>
-                  0.8 km
-                </div>
-              </div>
-              <p class="card-bio">Top-rated plumber in Tallinn for 3 years running. Faucets, boilers, pipes — I fix it fast and right the first time. Weekend slots open this week.</p>
-              <div class="card-specialties">
-                <span class="specialty-tag match">🔧 Plumbing</span>
-                <span class="specialty-tag match">💧 Faucet Repair</span>
-                <span class="specialty-tag">🔨 General</span>
-              </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">312</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">4.7★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">10yr</span><span class="stat-label">Experience</span></div>
             </div>
-          </article>
-
-          <!-- Empty State (hidden initially) -->
-          <div class="empty-state" id="empty-state" role="status" aria-label="No more handymen">
-            <div class="empty-icon">🔍</div>
-            <h3>You've seen them all!</h3>
-            <p>No more handymen in your area right now. New pros join {{COMPANY_NAME}} every day.</p>
-            <button class="empty-refresh-btn" onclick="resetCards()">See More Handymen →</button>
           </div>
 
+          <!-- Card 5: Peeter Lõhmus -->
+          <div class="handyman-card" id="card-4" data-name="Peeter" data-index="4" style="z-index:6; transform: scale(0.84) translateY(48px);">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
+                PL
+                <div class="availability-dot soon"></div>
+              </div>
+              <div class="card-info">
+                <div class="card-name">Peeter Lõhmus</div>
+                <div class="card-rating">
+                  <span class="stars">★★★★★</span>
+                  <span class="rating-num">4.9</span>
+                  <span class="rating-count">· 89 jobs</span>
+                </div>
+              </div>
+              <div class="card-rate">€65/hr</div>
+            </div>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Replies in 45 min</span>
+              <span class="distance-badge">📍 1.2 km</span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              Your go-to guy for everything around the house. Plumbing, drywall, tiling,
+              assembly — jack of all trades, master of customer satisfaction.
+            </div>
+            <div class="card-tags">
+              <span class="tag">🔨 General</span>
+              <span class="tag">🪟 Tiling</span>
+              <span class="tag">🧱 Drywall</span>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">89</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">6yr</span><span class="stat-label">Experience</span></div>
+            </div>
+          </div>
+
+          <!-- Card 6: Jüri Rebane -->
+          <div class="handyman-card" id="card-5" data-name="Jüri" data-index="5" style="z-index:5; transform: scale(0.80) translateY(60px);">
+            <div class="decision-overlay skip-overlay">SKIP</div>
+            <div class="decision-overlay request-overlay">REQUEST</div>
+            <div class="card-header">
+              <div class="avatar" style="background: linear-gradient(135deg, #EF4444, #DC2626);">
+                JR
+                <div class="availability-dot online"></div>
+              </div>
+              <div class="card-info">
+                <div class="card-name">Jüri Rebane</div>
+                <div class="card-rating">
+                  <span class="stars">★★★★★</span>
+                  <span class="rating-num">4.9</span>
+                  <span class="rating-count">· 421 jobs</span>
+                </div>
+              </div>
+              <div class="card-rate">€75/hr</div>
+            </div>
+            <div class="card-meta-row">
+              <span class="verified-badge">✔ Verified Pro</span>
+              <span class="response-badge">⚡ Available now</span>
+              <span class="distance-badge">📍 0.8 km</span>
+            </div>
+            <div class="card-divider"></div>
+            <div class="card-bio">
+              Top-rated plumber in Tallinn for 3 years running. Faucets, boilers, pipes —
+              I fix it fast and right the first time. Weekend slots open this week.
+            </div>
+            <div class="card-tags">
+              <span class="tag">🔧 Plumbing</span>
+              <span class="tag">💧 Faucet Repair</span>
+              <span class="tag">🔨 General</span>
+            </div>
+            <div class="card-stats">
+              <div class="stat-item"><span class="stat-value">421</span><span class="stat-label">Jobs Done</span></div>
+              <div class="stat-item"><span class="stat-value">4.9★</span><span class="stat-label">Rating</span></div>
+              <div class="stat-item"><span class="stat-value">18yr</span><span class="stat-label">Experience</span></div>
+            </div>
+          </div>
+
+          <!-- Empty State (shown when all cards swiped) -->
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">🔍</div>
+            <div class="empty-title">You've seen them all!</div>
+            <p class="empty-text">
+              No more handymen in your area right now.<br>
+              New pros join Pikkemand every day.
+            </p>
+            <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="empty-cta">
+              See More Handymen →
+            </a>
+          </div>
+
+          <!-- Swipe hint chips -->
+          <div class="swipe-hint" id="swipe-hint">
+            <span class="hint-chip">✕ Swipe left to skip</span>
+            <span class="hint-chip">♥ Swipe right to request</span>
+            <span class="hint-chip">★ Tap star to save</span>
+          </div>
+
+        </div><!-- /card-stack -->
+
+        <!-- Request Success Overlay -->
+        <div class="request-success" id="request-success">
+          <div class="success-icon">🎉</div>
+          <div class="success-title">Request Sent!</div>
+          <p class="success-sub" id="success-sub">They will respond shortly</p>
         </div>
 
-        <!-- Request Sent Toast -->
-        <div class="request-toast" id="request-toast" role="alert" aria-live="assertive">
-          <div class="toast-icon">🎉</div>
-          <div class="toast-title">Request Sent!</div>
-          <div class="toast-sub" id="toast-name-sub">Jüri will respond shortly</div>
+        <!-- Skip toast -->
+        <div class="toast" id="skip-toast">Skipped</div>
+
+        <!-- Save toast (dedicated element — no style mutation of skip-toast) -->
+        <div class="toast" id="save-toast"></div>
+
+      </div><!-- /card-area -->
+
+      <!-- Action Buttons -->
+      <div class="action-bar" id="action-bar">
+        <div class="action-col">
+          <button class="action-btn btn-skip" id="btn-skip" onclick="handleSkip()" aria-label="Skip this handyman">✕</button>
+          <span class="action-label">Skip</span>
         </div>
-
-        <!-- Skip Toast -->
-        <div class="skip-toast" id="skip-toast" role="alert" aria-live="polite">
-          <div class="toast-title">Skipped</div>
+        <div class="action-col">
+          <button class="action-btn btn-request" id="btn-request" onclick="handleRequest()" aria-label="Request this handyman">♥</button>
+          <span class="action-label">Request</span>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="action-bar" role="toolbar" aria-label="Swipe actions">
-          <button class="action-btn btn-skip" onclick="triggerSkip()" aria-label="Skip this handyman" title="Skip">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M18 6L6 18M6 6L18 18" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-            <span class="action-btn-label">Skip</span>
-          </button>
-
-          <button class="action-btn btn-save" onclick="triggerSave()" aria-label="Save for later" title="Save for later">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M10 17.5L3.5 11.5C2.5 10.5 2 9.1 2 7.7C2 4.9 4.2 2.7 7 2.7C8.4 2.7 9.7 3.3 10.7 4.2L10 4.9L9.3 4.2C8.3 3.3 7 2.7 5.6 2.7C2.8 2.7 0.6 4.9 0.6 7.7C0.6 9.1 1.1 10.5 2.1 11.5L10 18.2L17.9 11.5C18.9 10.5 19.4 9.1 19.4 7.7" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"/>
-              <path d="M14.5 2L16.5 6L21 6.5L17.5 10L18.5 14.5L14.5 12L10.5 14.5L11.5 10L8 6.5L12.5 6L14.5 2Z" fill="#3B82F6" opacity="0.3" stroke="#3B82F6" stroke-width="1.2" stroke-linejoin="round"/>
-            </svg>
-            <span class="action-btn-label">Save</span>
-          </button>
-
-          <button class="action-btn btn-request" onclick="triggerRequest()" aria-label="Request this handyman" title="Request">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-              <path d="M15 6.5C15 6.5 12 3 8.5 3C5.5 3 3 5.5 3 8.5C3 11.5 5.5 15 15 22.5C24.5 15 27 11.5 27 8.5C27 5.5 24.5 3 21.5 3C18 3 15 6.5 15 6.5Z" fill="white" opacity="0.9"/>
-            </svg>
-            <span class="action-btn-label" style="color: var(--amber-dark);">Request</span>
-          </button>
+        <div class="action-col">
+          <button class="action-btn btn-save" id="btn-save" onclick="handleSave()" aria-label="Save this handyman for later">★</button>
+          <span class="action-label">Save</span>
         </div>
+      </div>
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav" aria-label="App navigation">
-          <button class="nav-item" aria-label="Home">
-            <svg class="nav-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M3 9.5L11 3L19 9.5V19C19 19.55 18.55 20 18 20H14V14H8V20H4C3.45 20 3 19.55 3 19V9.5Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-            </svg>
-            <span class="nav-label">Home</span>
-          </button>
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav" aria-label="App navigation">
+        <div class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">My Tasks</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">💬</span>
+          <span class="nav-label">Messages</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profile</span>
+        </div>
+      </nav>
 
-          <button class="nav-item active" aria-label="My Tasks" aria-current="page">
-            <svg class="nav-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8" fill="none"/>
-              <path d="M7 8H15M7 11H13M7 14H11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            <span class="nav-label">My Tasks</span>
-          </button>
+    </div><!-- /app-screen -->
+  </div><!-- /phone-frame -->
 
-          <button class="nav-item" aria-label="Messages" style="position:relative;">
-            <svg class="nav-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M3 4C3 3.45 3.45 3 4 3H18C18.55 3 19 3.45 19 4V14C19 14.55 18.55 15 18 15H12L8 19V15H4C3.45 15 3 14.55 3 14V4Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-            </svg>
-            <span class="nav-badge" aria-label="3 unread messages"></span>
-            <span class="nav-label">Messages</span>
-          </button>
-
-          <button class="nav-item" aria-label="Profile">
-            <svg class="nav-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <circle cx="11" cy="8" r="4" stroke="currentColor" stroke-width="1.8" fill="none"/>
-              <path d="M3 19C3 15.69 6.58 13 11 13C15.42 13 19 15.69 19 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-            </svg>
-            <span class="nav-label">Profile</span>
-          </button>
-        </nav>
-
-      </div><!-- end app-screen -->
-    </div><!-- end phone-frame -->
-  </main>
-
-  <!-- ─── PAGE FOOTER ─── -->
+  <!-- ── PAGE FOOTER ── -->
   <footer class="page-footer">
-    <p>This is an interactive prototype of {{COMPANY_NAME}} · Swipe to experience the product</p>
-    <div class="cta-row">
-      <a href="/" class="footer-btn-primary">Learn More →</a>
-      <a href="mailto:{{COMPANY_EMAIL}}" class="footer-btn-secondary">Get Early Access</a>
-    </div>
-    <div class="swipe-instructions" aria-label="How to use the swipe interface">
-      <div class="swipe-tip">
-        <div class="swipe-tip-icon red">✕</div>
-        Swipe left to skip
-      </div>
-      <div class="swipe-tip">
-        <div class="swipe-tip-icon green">♥</div>
-        Swipe right to request
-      </div>
-      <div class="swipe-tip">
-        <div class="swipe-tip-icon blue">★</div>
-        Tap star to save
-      </div>
+    <p class="footer-text">
+      This is an interactive prototype of Pikkemand · Swipe to experience the product
+    </p>
+    <div class="footer-links">
+      <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Learn More →</a>
+      <a href="https://pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Get Early Access</a>
+      <a href="mailto:hello@pikkemand-pikkemand-pikkemand.speederai.app" class="footer-link">Contact Us</a>
     </div>
   </footer>
 
   <script>
-    // ─── SWIPE ENGINE ───────────────────────────────────────────────────────────
-    (function() {
-      'use strict';
+    // ── STATE ──
+    // All 6 cards indexed 0-5. cardOrder tracks which cards remain.
+    const TOTAL_CARDS = 6;
+    let cardOrder = [0, 1, 2, 3, 4, 5]; // front → back
+    let currentCard = null;
+    let isDragging = false;
+    let dragReady = true; // guard to prevent drag during 50ms reset window
 
-      const cardArea = document.getElementById('card-area');
-      const hintLeft = document.getElementById('hint-left');
-      const hintRight = document.getElementById('hint-right');
-      const requestToast = document.getElementById('request-toast');
-      const toastNameSub = document.getElementById('toast-name-sub');
-      const skipToast = document.getElementById('skip-toast');
-      const emptyState = document.getElementById('empty-state');
-      const matchCountText = document.getElementById('match-count-text');
+    // Drag state
+    let startX = 0, startY = 0, currentX = 0;
+    let animationFrame = null;
 
-      let cards = [];
-      let totalCards = 0;
-      let currentCard = null;
-      let startX = 0;
-      let startY = 0;
-      let isDragging = false;
-      let currentX = 0;
-      let currentY = 0;
-      let toastTimeout = null;
+    // Toast timers (separate for skip and save to avoid race conditions)
+    let skipToastTimer = null;
+    let saveToastTimer = null;
 
-      function getCards() {
-        return Array.from(cardArea.querySelectorAll('.card:not(.gone)'));
-      }
+    // DOM refs
+    const cardStack = document.getElementById('card-stack');
+    const emptyState = document.getElementById('empty-state');
+    const swipeHint = document.getElementById('swipe-hint');
+    const requestSuccess = document.getElementById('request-success');
+    const successSub = document.getElementById('success-sub');
+    const skipToastEl = document.getElementById('skip-toast');
+    const saveToastEl = document.getElementById('save-toast');
+    const actionBar = document.getElementById('action-bar');
 
-      function initCards() {
-        cards = getCards();
-        totalCards = cards.length;
-        updateMatchCount();
-        if (cards.length > 0) {
-          attachDrag(cards[cards.length - 1]); // top card
-        }
-      }
+    // ── CARD MANAGEMENT ──
+    function getTopCardEl() {
+      if (cardOrder.length === 0) return null;
+      return document.getElementById('card-' + cardOrder[0]);
+    }
 
-      function updateMatchCount() {
-        const remaining = getCards().length;
-        if (remaining > 0) {
-          matchCountText.innerHTML = `<strong>${remaining}</strong> handyman${remaining !== 1 ? 's' : ''} available`;
+    function getCardName(cardIndex) {
+      const el = document.getElementById('card-' + cardIndex);
+      return el ? (el.dataset.name || 'This pro') : 'This pro';
+    }
+
+    function reorderStack() {
+      // Apply z-index and stacking transforms based on position in queue
+      cardOrder.forEach((idx, pos) => {
+        const el = document.getElementById('card-' + idx);
+        if (!el) return;
+        el.className = 'handyman-card';
+        if (pos === 0) {
+          el.classList.add('top-card');
+          el.style.transform = '';
+          el.style.zIndex = 10;
+        } else if (pos === 1) {
+          el.classList.add('second-card');
+          el.style.zIndex = 9;
+          el.style.transform = 'scale(0.96) translateY(12px)';
+        } else if (pos === 2) {
+          el.classList.add('third-card');
+          el.style.zIndex = 8;
+          el.style.transform = 'scale(0.92) translateY(24px)';
         } else {
-          matchCountText.innerHTML = `<strong>0</strong> handymen available`;
+          el.style.zIndex = Math.max(1, 10 - pos);
+          const scale = Math.max(0.80, 0.96 - pos * 0.04);
+          const translateY = pos * 12;
+          el.style.transform = `scale(${scale}) translateY(${translateY}px)`;
         }
-      }
-
-      function showRequestToast(name) {
-        if (toastTimeout) clearTimeout(toastTimeout);
-        const firstName = name ? name.split(' ')[0] : 'They';
-        toastNameSub.textContent = `${firstName} will respond shortly`;
-        requestToast.classList.add('show');
-        toastTimeout = setTimeout(() => requestToast.classList.remove('show'), 2000);
-      }
-
-      function showSkipToast() {
-        if (toastTimeout) clearTimeout(toastTimeout);
-        skipToast.classList.add('show');
-        toastTimeout = setTimeout(() => skipToast.classList.remove('show'), 1000);
-      }
-
-      function removeCard(card, direction) {
-        if (!card || card.classList.contains('gone')) return;
-        card.classList.add('gone');
-
-        const name = card.dataset.name || '';
-
-        if (direction === 'right') {
-          card.classList.add('animate-out-right');
-          showRequestToast(name);
-        } else if (direction === 'left') {
-          card.classList.add('animate-out-left');
-          showSkipToast();
-        } else {
-          card.classList.add('animate-out-up');
-        }
-
-        // Update stack positions after removal
-        setTimeout(() => {
-          card.remove();
-          updateMatchCount();
-          updateStackPositions();
-          const remaining = getCards();
-          if (remaining.length === 0) {
-            emptyState.style.display = 'flex';
-          } else {
-            attachDrag(remaining[remaining.length - 1]);
-          }
-        }, 420);
-      }
-
-      function updateStackPositions() {
-        const remaining = getCards();
-        remaining.forEach((c, i) => {
-          const reverseIdx = remaining.length - 1 - i;
-          c.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease';
-          if (reverseIdx === 0) {
-            c.style.transform = 'translateY(0) scale(1)';
-            c.style.zIndex = '5';
-            c.style.opacity = '1';
-          } else if (reverseIdx === 1) {
-            c.style.transform = 'translateY(10px) scale(0.96)';
-            c.style.zIndex = '4';
-            c.style.opacity = '1';
-          } else if (reverseIdx === 2) {
-            c.style.transform = 'translateY(20px) scale(0.92)';
-            c.style.zIndex = '3';
-            c.style.opacity = '1';
-          } else {
-            c.style.transform = 'translateY(28px) scale(0.88)';
-            c.style.zIndex = '2';
-            c.style.opacity = '0.7';
-          }
-          setTimeout(() => { c.style.transition = ''; }, 320);
-        });
-      }
-
-      function attachDrag(card) {
-        if (!card) return;
-        currentCard = card;
-
-        // Mouse events
-        card.addEventListener('mousedown', onDragStart, { passive: true });
-        // Touch events
-        card.addEventListener('touchstart', onDragStart, { passive: true });
-      }
-
-      function onDragStart(e) {
-        if (e.target.classList.contains('specialty-tag') || e.target.tagName === 'BUTTON') return;
-
-        isDragging = true;
-        const point = e.type === 'touchstart' ? e.touches[0] : e;
-        startX = point.clientX;
-        startY = point.clientY;
-        currentX = 0;
-        currentY = 0;
-
-        currentCard.classList.add('is-dragging');
-        currentCard.style.transition = 'none';
-
-        document.addEventListener('mousemove', onDragMove, { passive: true });
-        document.addEventListener('mouseup', onDragEnd);
-        document.addEventListener('touchmove', onDragMove, { passive: true });
-        document.addEventListener('touchend', onDragEnd);
-      }
-
-      function onDragMove(e) {
-        if (!isDragging || !currentCard) return;
-        const point = e.type === 'touchmove' ? e.touches[0] : e;
-        currentX = point.clientX - startX;
-        currentY = point.clientY - startY;
-
-        const rotation = currentX * 0.07;
-        currentCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotation}deg)`;
-
-        // Show/hide directional hints
-        const threshold = 60;
-        if (currentX > threshold) {
-          hintRight.style.opacity = Math.min((currentX - threshold) / 80, 1);
-          hintLeft.style.opacity = '0';
-        } else if (currentX < -threshold) {
-          hintLeft.style.opacity = Math.min((Math.abs(currentX) - threshold) / 80, 1);
-          hintRight.style.opacity = '0';
-        } else {
-          hintLeft.style.opacity = '0';
-          hintRight.style.opacity = '0';
-        }
-      }
-
-      function onDragEnd() {
-        if (!isDragging || !currentCard) return;
-        isDragging = false;
-
-        document.removeEventListener('mousemove', onDragMove);
-        document.removeEventListener('mouseup', onDragEnd);
-        document.removeEventListener('touchmove', onDragMove);
-        document.removeEventListener('touchend', onDragEnd);
-
-        currentCard.classList.remove('is-dragging');
-        hintLeft.style.opacity = '0';
-        hintRight.style.opacity = '0';
-
-        const swipeThreshold = 100;
-
-        if (currentX > swipeThreshold) {
-          removeCard(currentCard, 'right');
-        } else if (currentX < -swipeThreshold) {
-          removeCard(currentCard, 'left');
-        } else {
-          // Snap back
-          currentCard.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          const reverseIdx = getCards().indexOf(currentCard);
-          if (reverseIdx === getCards().length - 1) {
-            currentCard.style.transform = 'translateY(0) scale(1)';
-          }
-          setTimeout(() => {
-            if (currentCard) currentCard.style.transition = '';
-          }, 500);
-        }
-
-        currentCard = null;
-        // Re-attach to new top card
-        setTimeout(() => {
-          const remaining = getCards();
-          if (remaining.length > 0 && !isDragging) {
-            currentCard = remaining[remaining.length - 1];
-            attachDrag(currentCard);
-          }
-        }, 50);
-      }
-
-      // ─── BUTTON ACTIONS ──────────────────────────────────────────────────────
-
-      window.triggerSkip = function() {
-        const remaining = getCards();
-        if (remaining.length === 0) return;
-        const top = remaining[remaining.length - 1];
-        // Animate the skip button
-        const btn = document.querySelector('.btn-skip');
-        btn.style.transform = 'scale(0.9)';
-        setTimeout(() => { btn.style.transform = ''; }, 200);
-        removeCard(top, 'left');
-      };
-
-      window.triggerRequest = function() {
-        const remaining = getCards();
-        if (remaining.length === 0) return;
-        const top = remaining[remaining.length - 1];
-        const btn = document.querySelector('.btn-request');
-        btn.style.transform = 'scale(0.9)';
-        setTimeout(() => { btn.style.transform = ''; }, 200);
-        removeCard(top, 'right');
-      };
-
-      window.triggerSave = function() {
-        const remaining = getCards();
-        if (remaining.length === 0) return;
-        const top = remaining[remaining.length - 1];
-        const name = top.dataset.name || 'This handyman';
-        const firstName = name.split(' ')[0];
-
-        // Show save animation
-        const btn = document.querySelector('.btn-save');
-        btn.style.transform = 'scale(1.15)';
-        setTimeout(() => { btn.style.transform = ''; }, 300);
-
-        // Brief "Saved!" flash using skip toast repurpose
-        if (toastTimeout) clearTimeout(toastTimeout);
-        skipToast.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
-        skipToast.style.boxShadow = '0 16px 40px rgba(59,130,246,0.35)';
-        skipToast.querySelector('.toast-title').textContent = `⭐ ${firstName} Saved!`;
-        skipToast.classList.add('show');
-        toastTimeout = setTimeout(() => {
-          skipToast.classList.remove('show');
-          setTimeout(() => {
-            skipToast.style.background = '';
-            skipToast.style.boxShadow = '';
-            skipToast.querySelector('.toast-title').textContent = 'Skipped';
-          }, 300);
-        }, 1500);
-
-        removeCard(top, 'up');
-      };
-
-      window.resetCards = function() {
-        // Reset: reload the page
-        window.location.reload();
-      };
-
-      // ─── KEYBOARD SHORTCUTS ─────────────────────────────────────────────────
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') triggerSkip();
-        if (e.key === 'ArrowRight') triggerRequest();
-        if (e.key === 'ArrowUp') triggerSave();
       });
 
-      // ─── INIT ───────────────────────────────────────────────────────────────
-      initCards();
+      if (cardOrder.length === 0) {
+        emptyState.style.display = 'flex';
+        swipeHint.style.display = 'none';
+        actionBar.style.opacity = '0.4';
+        actionBar.style.pointerEvents = 'none';
+      } else {
+        emptyState.style.display = 'none';
+        swipeHint.style.display = 'flex';
+        actionBar.style.opacity = '1';
+        actionBar.style.pointerEvents = 'auto';
+        // Attach drag to new top card immediately
+        attachDrag(getTopCardEl());
+      }
+    }
 
-    })();
+    // Remove top card and animate it off screen
+    function dismissCard(direction, onComplete) {
+      const topIdx = cardOrder[0];
+      const el = document.getElementById('card-' + topIdx);
+      if (!el) { onComplete && onComplete(); return; }
+
+      const xTarget = direction === 'right' ? 600 : -600;
+      const rotation = direction === 'right' ? 30 : -30;
+
+      el.style.transition = 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease';
+      el.style.transform = `translateX(${xTarget}px) rotate(${rotation}deg)`;
+      el.style.opacity = '0';
+
+      cardOrder.shift();
+
+      setTimeout(() => {
+        el.style.display = 'none';
+        onComplete && onComplete();
+      }, 420);
+    }
+
+    // ── DRAG / SWIPE LOGIC ──
+    function attachDrag(card) {
+      if (!card) return;
+      // Remove previous listeners to avoid stacking
+      card.removeEventListener('mousedown', onDragStart);
+      card.removeEventListener('touchstart', onDragStart);
+      card.addEventListener('mousedown', onDragStart, { passive: false });
+      card.addEventListener('touchstart', onDragStart, { passive: false });
+    }
+
+    function onDragStart(e) {
+      // Only respond if dragReady (not in the brief cleanup window)
+      if (!dragReady) return;
+      if (cardOrder.length === 0) return;
+
+      currentCard = getTopCardEl();
+      if (!currentCard) return;
+
+      isDragging = true;
+      const point = e.touches ? e.touches[0] : e;
+      startX = point.clientX;
+      startY = point.clientY;
+      currentX = 0;
+
+      currentCard.style.transition = 'none';
+      currentCard.style.willChange = 'transform';
+
+      document.addEventListener('mousemove', onDragMove, { passive: false });
+      document.addEventListener('mouseup', onDragEnd);
+      document.addEventListener('touchmove', onDragMove, { passive: false });
+      document.addEventListener('touchend', onDragEnd);
+
+      e.preventDefault();
+    }
+
+    function onDragMove(e) {
+      if (!isDragging || !currentCard) return;
+      const point = e.touches ? e.touches[0] : e;
+      currentX = point.clientX - startX;
+      const currentY = point.clientY - startY;
+      const rotation = currentX * 0.08;
+
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        if (!currentCard) return;
+        currentCard.style.transform = `translateX(${currentX}px) translateY(${currentY * 0.3}px) rotate(${rotation}deg)`;
+
+        // Show decision overlay based on drag direction
+        const skipOv = currentCard.querySelector('.skip-overlay');
+        const reqOv = currentCard.querySelector('.request-overlay');
+        const threshold = 40;
+
+        if (currentX < -threshold) {
+          skipOv.style.opacity = Math.min(1, Math.abs(currentX) / 120);
+          reqOv.style.opacity = 0;
+        } else if (currentX > threshold) {
+          reqOv.style.opacity = Math.min(1, currentX / 120);
+          skipOv.style.opacity = 0;
+        } else {
+          skipOv.style.opacity = 0;
+          reqOv.style.opacity = 0;
+        }
+      });
+
+      e.preventDefault();
+    }
+
+    function onDragEnd(e) {
+      if (!isDragging) return;
+      isDragging = false;
+
+      document.removeEventListener('mousemove', onDragMove);
+      document.removeEventListener('mouseup', onDragEnd);
+      document.removeEventListener('touchmove', onDragMove);
+      document.removeEventListener('touchend', onDragEnd);
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+
+      const card = currentCard;
+      currentCard = null;
+
+      // Set dragReady=false to prevent new drags during the transition window.
+      // Re-enable AFTER the card dismissal animation completes (420ms),
+      // not after an arbitrary short delay — this closes the 50ms race window.
+      dragReady = false;
+
+      if (!card) {
+        dragReady = true;
+        return;
+      }
+
+      const SWIPE_THRESHOLD = 80;
+
+      // Hide overlays
+      card.querySelectorAll('.decision-overlay').forEach(o => o.style.opacity = 0);
+
+      if (currentX > SWIPE_THRESHOLD) {
+        // Swiped right → request
+        triggerRequest(card);
+      } else if (currentX < -SWIPE_THRESHOLD) {
+        // Swiped left → skip
+        triggerSkip(card);
+      } else {
+        // Snap back
+        card.style.transition = 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1)';
+        card.style.transform = '';
+        dragReady = true; // ready immediately on snap-back
+      }
+    }
+
+    // ── ACTION HANDLERS ──
+
+    function triggerSkip(cardEl) {
+      const name = cardOrder[0] !== undefined ? getCardName(cardOrder[0]) : 'Pro';
+      dismissCard('left', () => {
+        reorderStack();
+        dragReady = true;
+      });
+
+      // Skip toast — uses dedicated #skip-toast element, no style mutation
+      if (skipToastTimer) clearTimeout(skipToastTimer);
+      skipToastEl.textContent = 'Skipped';
+      skipToastEl.classList.add('show');
+      skipToastTimer = setTimeout(() => {
+        skipToastEl.classList.remove('show');
+        skipToastTimer = null;
+      }, 1500);
+    }
+
+    function triggerRequest(cardEl) {
+      const nameIdx = cardOrder[0];
+      const name = nameIdx !== undefined ? getCardName(nameIdx) : 'This pro';
+      dismissCard('right', () => {
+        reorderStack();
+        dragReady = true;
+      });
+
+      // Show success overlay
+      successSub.textContent = `${name} will respond shortly`;
+      requestSuccess.classList.add('show');
+      setTimeout(() => requestSuccess.classList.remove('show'), 2000);
+    }
+
+    function triggerSave() {
+      if (cardOrder.length === 0) return;
+      const name = getCardName(cardOrder[0]);
+
+      // Save toast — uses dedicated #save-toast element (separate from skip-toast)
+      // No style mutation of skip-toast, so no race condition is possible.
+      if (saveToastTimer) clearTimeout(saveToastTimer);
+      saveToastEl.textContent = `⭐ ${name} Saved!`;
+      saveToastEl.classList.add('show');
+      saveToastTimer = setTimeout(() => {
+        saveToastEl.classList.remove('show');
+        saveToastTimer = null;
+      }, 1500);
+    }
+
+    // Button click handlers
+    function handleSkip() {
+      if (cardOrder.length === 0 || !dragReady) return;
+      dragReady = false;
+      const card = getTopCardEl();
+      if (!card) { dragReady = true; return; }
+      currentX = -90; // simulate left swipe
+      triggerSkip(card);
+    }
+
+    function handleRequest() {
+      if (cardOrder.length === 0 || !dragReady) return;
+      dragReady = false;
+      const card = getTopCardEl();
+      if (!card) { dragReady = true; return; }
+      currentX = 90; // simulate right swipe
+      triggerRequest(card);
+    }
+
+    function handleSave() {
+      if (cardOrder.length === 0) return;
+      triggerSave();
+    }
+
+    // ── INIT ──
+    // Attach drag to the initial top card
+    reorderStack();
+
+    // Hide swipe hint after first interaction
+    let hintHidden = false;
+    document.addEventListener('mousedown', () => {
+      if (!hintHidden) {
+        hintHidden = true;
+        swipeHint.style.opacity = '0';
+        setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
+      }
+    }, { once: true });
+    document.addEventListener('touchstart', () => {
+      if (!hintHidden) {
+        hintHidden = true;
+        swipeHint.style.opacity = '0';
+        setTimeout(() => { swipeHint.style.display = 'none'; }, 300);
+      }
+    }, { once: true });
   </script>
 
 </body>
